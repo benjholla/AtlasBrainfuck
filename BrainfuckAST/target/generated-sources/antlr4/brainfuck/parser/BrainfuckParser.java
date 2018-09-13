@@ -136,7 +136,7 @@ public class BrainfuckParser extends Parser {
 			setState(9);
 			match(EOF);
 
-			   	  SourceCorrespondence sc = new SourceCorrespondence(file, 0, 0, 0);
+			      SourceCorrespondence sc = new SourceCorrespondence(file, 0, 0, 0);
 			      ((ProgramContext)_localctx).prog =  new Program(sc, ((ProgramContext)_localctx).commands.list);
 			   
 			}
@@ -268,9 +268,9 @@ public class BrainfuckParser extends Parser {
 				setState(20);
 				((CommandContext)_localctx).l = loop();
 
-				   	  long startPos = _ctx.getStart().getCharPositionInLine();
-				   	  long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-				   	  SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+				      long startPos = _ctx.getStart().getCharPositionInLine();
+				      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
+				      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
 				      ((CommandContext)_localctx).value =  new LoopCommand(sc, ((CommandContext)_localctx).l.list);
 				   
 				}
@@ -281,9 +281,9 @@ public class BrainfuckParser extends Parser {
 				setState(23);
 				((CommandContext)_localctx).ti = match(TAPE_INCREMENT);
 
-				   	  long startPos = _ctx.getStart().getCharPositionInLine();
-				   	  long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-				   	  SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+				      long startPos = _ctx.getStart().getCharPositionInLine();
+				      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
+				      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
 				      ((CommandContext)_localctx).value =  new IncrementCommand(sc);
 				   
 				}
@@ -294,9 +294,9 @@ public class BrainfuckParser extends Parser {
 				setState(25);
 				((CommandContext)_localctx).td = match(TAPE_DECREMENT);
 
-				   	  long startPos = _ctx.getStart().getCharPositionInLine();
-				   	  long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-				   	  SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+				      long startPos = _ctx.getStart().getCharPositionInLine();
+				      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
+				      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
 				      ((CommandContext)_localctx).value =  new DecrementCommand(sc);
 				   
 				}
@@ -307,9 +307,9 @@ public class BrainfuckParser extends Parser {
 				setState(27);
 				((CommandContext)_localctx).tl = match(TAPE_LEFT);
 
-				   	  long startPos = _ctx.getStart().getCharPositionInLine();
-				   	  long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-				   	  SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+				      long startPos = _ctx.getStart().getCharPositionInLine();
+				      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
+				      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
 				      ((CommandContext)_localctx).value =  new MoveLeftCommand(sc);
 				   
 				}
@@ -320,9 +320,9 @@ public class BrainfuckParser extends Parser {
 				setState(29);
 				((CommandContext)_localctx).tr = match(TAPE_RIGHT);
 
-				   	  long startPos = _ctx.getStart().getCharPositionInLine();
-				   	  long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-				   	  SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+				      long startPos = _ctx.getStart().getCharPositionInLine();
+				      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
+				      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
 				      ((CommandContext)_localctx).value =  new MoveRightCommand(sc);
 				   
 				}
@@ -333,9 +333,9 @@ public class BrainfuckParser extends Parser {
 				setState(31);
 				((CommandContext)_localctx).i = match(INPUT);
 
-				   	  long startPos = _ctx.getStart().getCharPositionInLine();
-				   	  long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-				   	  SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+				      long startPos = _ctx.getStart().getCharPositionInLine();
+				      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
+				      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
 				      ((CommandContext)_localctx).value =  new InputCommand(sc);
 				   
 				}
@@ -346,9 +346,9 @@ public class BrainfuckParser extends Parser {
 				setState(33);
 				((CommandContext)_localctx).o = match(OUTPUT);
 
-				   	  long startPos = _ctx.getStart().getCharPositionInLine();
-				   	  long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-				   	  SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+				      long startPos = _ctx.getStart().getCharPositionInLine();
+				      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
+				      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
 				      ((CommandContext)_localctx).value =  new OutputCommand(sc);
 				   
 				}
