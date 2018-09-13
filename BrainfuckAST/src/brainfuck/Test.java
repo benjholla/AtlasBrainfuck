@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import brainfuck.ast.Command;
 import brainfuck.ast.Program;
 import brainfuck.parser.BrainfuckLexer;
 import brainfuck.parser.BrainfuckParser;
@@ -23,7 +24,13 @@ public class Test {
 //		parser.removeErrorListeners();
 //		parser.addErrorListener(new ParserError(file.getName()));
 		Program program = parser.program().prog;
-		System.out.println(program.toString());
+		
+		System.out.println(program.getSourceCorrespondence().toString());
+		for(Command command : program.getCommands()) {
+			System.out.println(command.toString() + " " + command.getSourceCorrespondence().toString());
+		}
+		
+//		System.out.println(program.toString());
 	}
 	
 }

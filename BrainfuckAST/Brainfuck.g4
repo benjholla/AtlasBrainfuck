@@ -24,7 +24,13 @@ grammar Brainfuck;
 program returns [Program prog]
    : commands=command_list EOF
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, 0, 0, 0);
+   	  SourceCorrespondence sc;
+   	  if($commands.list.isEmpty()){
+   	     sc = new SourceCorrespondence(file, 0, 0, 0);
+   	  } else {
+   	     SourceCorrespondence firstCommandSC = $commands.list.get(0).getSourceCorrespondence();
+   	     sc = new SourceCorrespondence(file, firstCommandSC.getLine(), firstCommandSC.getOffset(), _ctx.getStart().getText().length()); 
+   	  }
       $prog = new Program(sc, $commands.list);
    }
    ;
@@ -40,37 +46,37 @@ command_list returns [ArrayList<Command> list]
 command returns [Command value] 
    : l=loop
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), (1 + $l.list.size() + 1));
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
       $value = new LoopCommand(sc, $l.list);
    }
    | ti=TAPE_INCREMENT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
       $value = new IncrementCommand(sc);
    }
    | td=TAPE_DECREMENT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
       $value = new DecrementCommand(sc);
    }
    | tl=TAPE_LEFT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
       $value = new MoveLeftCommand(sc);
    }
    | tr=TAPE_RIGHT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
       $value = new MoveRightCommand(sc);
    }
    | i=INPUT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
       $value = new InputCommand(sc);
    }
    | o=OUTPUT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
       $value = new OutputCommand(sc);
    }
    ;
