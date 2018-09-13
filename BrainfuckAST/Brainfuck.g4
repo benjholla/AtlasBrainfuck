@@ -40,51 +40,37 @@ command_list returns [ArrayList<Command> list]
 command returns [Command value] 
    : l=loop
    {
-      long startPos = _ctx.getStart().getCharPositionInLine();
-      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), (1 + $l.list.size() + 1));
       $value = new LoopCommand(sc, $l.list);
    }
    | ti=TAPE_INCREMENT
    {
-      long startPos = _ctx.getStart().getCharPositionInLine();
-      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
       $value = new IncrementCommand(sc);
    }
    | td=TAPE_DECREMENT
    {
-      long startPos = _ctx.getStart().getCharPositionInLine();
-      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
       $value = new DecrementCommand(sc);
    }
    | tl=TAPE_LEFT
    {
-      long startPos = _ctx.getStart().getCharPositionInLine();
-      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
       $value = new MoveLeftCommand(sc);
    }
    | tr=TAPE_RIGHT
    {
-      long startPos = _ctx.getStart().getCharPositionInLine();
-      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
       $value = new MoveRightCommand(sc);
    }
    | i=INPUT
    {
-      long startPos = _ctx.getStart().getCharPositionInLine();
-      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
       $value = new InputCommand(sc);
    }
    | o=OUTPUT
    {
-      long startPos = _ctx.getStart().getCharPositionInLine();
-      long stopPos = _ctx.getStop() != null ? _ctx.getStop().getCharPositionInLine() : startPos + 1;
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), startPos, (stopPos-startPos));
+      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getCharPositionInLine(), 1);
       $value = new OutputCommand(sc);
    }
    ;
