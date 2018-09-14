@@ -8,3 +8,4 @@ Atlas for Brainfuck
 - [Brainfuck ANTLR grammar](https://github.com/antlr/grammars-v4/blob/master/brainfuck/brainfuck.g4)
 - [Source Correspondence in ANTLR](https://stackoverflow.com/questions/17706327/getting-token-start-character-position-relative-to-the-beginning-of-file)
 - [Example Brainfuck programs](https://github.com/antlr/grammars-v4/tree/master/brainfuck/examples)
+- [Brainfuck Eclipse Plugin](https://marketplace.eclipse.org/content/brainfck-development-tools)
