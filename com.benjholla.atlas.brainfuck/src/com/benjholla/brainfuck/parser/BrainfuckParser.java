@@ -511,8 +511,8 @@ public class BrainfuckParser extends Parser {
 				setState(39);
 				((LoopContext) _localctx).rbrace = match(T__1);
 
-				int length = ((LoopContext) _localctx).rbrace.getStartIndex()
-						- ((LoopContext) _localctx).lbrace.getStartIndex();
+				int length = (((LoopContext) _localctx).rbrace.getStartIndex()
+						- ((LoopContext) _localctx).lbrace.getStartIndex()) + 1;
 				ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file,
 						((LoopContext) _localctx).lbrace.getStartIndex(), length,
 						((LoopContext) _localctx).lbrace.getLine(), ((LoopContext) _localctx).rbrace.getLine());

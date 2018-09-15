@@ -83,7 +83,7 @@ instruction returns [Instruction value]
 loop returns [LoopInstruction value]
    : lbrace='[' instructions=instruction_list rbrace=']'
    {
-   	  int length = $rbrace.getStartIndex() - $lbrace.getStartIndex();
+   	  int length = ($rbrace.getStartIndex() - $lbrace.getStartIndex()) + 1;
    	  ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file, $lbrace.getStartIndex(), length, $lbrace.getLine(), $rbrace.getLine());
       $value = new LoopInstruction(sc, $instructions.list);
    }
