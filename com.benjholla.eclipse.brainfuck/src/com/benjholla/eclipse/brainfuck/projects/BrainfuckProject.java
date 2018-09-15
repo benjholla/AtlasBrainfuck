@@ -61,7 +61,7 @@ public class BrainfuckProject {
 				}
 			}
 			File file = directory;
-			if(file.getName().endsWith(".b") || file.getName().endsWith(".bf")){
+			if(file.getName().endsWith(".bf")){
 				jimple.add(file);
 			}
 		}
