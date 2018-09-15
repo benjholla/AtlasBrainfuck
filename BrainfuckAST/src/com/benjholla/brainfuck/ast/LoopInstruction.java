@@ -17,14 +17,14 @@ public class LoopInstruction extends Instruction {
 
 	@Override
 	public String toString() {
-		StringBuilder cmds = new StringBuilder();
+		StringBuilder result = new StringBuilder();
 		for(Instruction instruction : instructions) {
 			if(instruction instanceof LoopInstruction) {
-				cmds.append(" ");
+				result.append(" ");
 			}
-			cmds.append(instruction.toString());
+			result.append(instruction.toString());
 		}
-		return "Loop: [" + cmds + "]";
+		return "Loop: [" + result + "]";
 	}
 	
 	@Override

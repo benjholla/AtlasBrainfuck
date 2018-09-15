@@ -16,14 +16,14 @@ public class Program extends ASTNode {
 
 	@Override
 	public String toString() {
-		StringBuilder cmds = new StringBuilder();
+		StringBuilder result = new StringBuilder();
 		for(Instruction instruction : instructions) {
 			if(instruction instanceof LoopInstruction) {
-				cmds.append(" ");
+				result.append(" ");
 			}
-			cmds.append(instruction.toString());
+			result.append(instruction.toString());
 		}
-		return "Program: {" + cmds + "}";
+		return "Program: {" + result + "}";
 	}
 	
 }

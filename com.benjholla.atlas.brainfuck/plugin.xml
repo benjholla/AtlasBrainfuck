@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+  <extension
+        id="BrainfuckLanguageIndexingProviderFactory"
+        name="BrainfuckLanguageIndexingProviderFactory"
+        point="com.ensoftcorp.atlas.core.LanguageIndexingProviderFactories">
+     <ProviderFactory
+           class="com.benjholla.atlas.brainfuck.frontend.BrainfuckIndexer">
+     </ProviderFactory>
+  </extension>
+  
+</plugin>
