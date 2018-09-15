@@ -1,4 +1,4 @@
-package brainfuck.interpreter;
+package com.benjholla.brainfuck.interpreter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import brainfuck.ast.Instruction;
-import brainfuck.ast.LoopInstruction;
-import brainfuck.ast.Program;
+import com.benjholla.brainfuck.ast.Instruction;
+import com.benjholla.brainfuck.ast.LoopInstruction;
+import com.benjholla.brainfuck.ast.Program;
 
 /**
  * A Brainfuck Interpreter implementation using a parsed Brainfuck AST.

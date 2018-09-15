@@ -1,15 +1,16 @@
-package brainfuck.regression;
+package com.benjholla.brainfuck.regression;
 
 import java.io.File;
 import java.io.FileInputStream;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import brainfuck.ast.Program;
-import brainfuck.interpreter.BrainfuckInterpreter;
-import brainfuck.parser.BrainfuckLexer;
-import brainfuck.parser.BrainfuckParser;
+import com.benjholla.brainfuck.ast.Program;
+import com.benjholla.brainfuck.interpreter.BrainfuckInterpreter;
+import com.benjholla.brainfuck.parser.BrainfuckLexer;
+import com.benjholla.brainfuck.parser.BrainfuckParser;
 
 public class Test {
 
@@ -30,7 +31,7 @@ public class Test {
 		
 		File file = new File("examples" + File.separator + "fib-small.b");
 		FileInputStream fis = new FileInputStream(file);
-		ANTLRInputStream input = new ANTLRInputStream(fis);
+		CharStream input = CharStreams.fromStream(fis);
 		
 		BrainfuckLexer lexer = new BrainfuckLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);

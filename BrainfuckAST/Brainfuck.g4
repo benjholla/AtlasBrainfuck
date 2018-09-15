@@ -1,9 +1,9 @@
 grammar Brainfuck;
 
 @header{
-	package brainfuck.parser; 
+	package com.benjholla.brainfuck.parser; 
 	
-	import brainfuck.ast.*;
+	import com.benjholla.brainfuck.ast.*;
 	import java.util.List;
 	import java.io.File;
 }

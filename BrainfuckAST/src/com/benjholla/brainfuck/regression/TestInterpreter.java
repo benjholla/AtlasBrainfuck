@@ -1,4 +1,4 @@
-package brainfuck.regression;
+package com.benjholla.brainfuck.regression;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
@@ -8,14 +8,15 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.jupiter.api.Test;
 
-import brainfuck.ast.Program;
-import brainfuck.interpreter.BrainfuckInterpreter;
-import brainfuck.parser.BrainfuckLexer;
-import brainfuck.parser.BrainfuckParser;
+import com.benjholla.brainfuck.ast.Program;
+import com.benjholla.brainfuck.interpreter.BrainfuckInterpreter;
+import com.benjholla.brainfuck.parser.BrainfuckLexer;
+import com.benjholla.brainfuck.parser.BrainfuckParser;
 
 class TestInterpreter {
 
@@ -23,7 +24,7 @@ class TestInterpreter {
 	void testHelloWorld() throws Exception {
 		File source = new File("examples" + File.separator + "hello.b");
 		FileInputStream fis = new FileInputStream(source);
-		ANTLRInputStream input = new ANTLRInputStream(fis);
+		CharStream input = CharStreams.fromStream(fis);
 		BrainfuckLexer lexer = new BrainfuckLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		BrainfuckParser parser = new BrainfuckParser(tokens);
@@ -41,7 +42,7 @@ class TestInterpreter {
 	void testFibonacciSequence() throws Exception {
 		File source = new File("examples" + File.separator + "fib-small.b");
 		FileInputStream fis = new FileInputStream(source);
-		ANTLRInputStream input = new ANTLRInputStream(fis);
+		CharStream input = CharStreams.fromStream(fis);
 		BrainfuckLexer lexer = new BrainfuckLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		BrainfuckParser parser = new BrainfuckParser(tokens);
@@ -59,7 +60,7 @@ class TestInterpreter {
 	void testQuine() throws Exception {
 		File source = new File("examples" + File.separator + "quine.b");
 		FileInputStream fis = new FileInputStream(source);
-		ANTLRInputStream input = new ANTLRInputStream(fis);
+		CharStream input = CharStreams.fromStream(fis);
 		BrainfuckLexer lexer = new BrainfuckLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		BrainfuckParser parser = new BrainfuckParser(tokens);
