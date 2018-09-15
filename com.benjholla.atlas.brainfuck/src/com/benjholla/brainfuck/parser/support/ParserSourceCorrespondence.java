@@ -5,36 +5,43 @@ import java.io.File;
 public class ParserSourceCorrespondence {
 
 	private File source = null;
-	private int line = 0;
-	private long offset = 0;
-	private long length = 0;
+	private int offset = 0;
+	private int length = 0;
+	private int startLine = 0;
+	private int endLine = 0;
 
-	public ParserSourceCorrespondence(File source, int line, long offset, long length) {
+	public ParserSourceCorrespondence(File source, int offset, int length, int startLine, int endLine) {
 		this.source = source;
-		this.line = line;
 		this.offset = offset;
 		this.length = length;
+		this.startLine = startLine;
+		this.endLine = endLine;
 	}
 
 	public File getSource() {
 		return source;
 	}
-
-	public int getLine() {
-		return line;
-	}
-
-	public long getOffset() {
+	
+	public int getOffset() {
 		return offset;
 	}
 
-	public long getLength() {
+	public int getLength() {
 		return length;
+	}
+
+	public int getStartLine() {
+		return startLine;
+	}
+	
+	public int getEndLine() {
+		return endLine;
 	}
 
 	@Override
 	public String toString() {
-		return "SourceCorrespondence [source=" + (source != null ? source.getName() : "null") + ", line=" + line + ", offset=" + offset + ", length=" + length + "]";
+		return "ParserSourceCorrespondence [source=" + source + ", offset=" + offset + ", length=" + length
+				+ ", startLine=" + startLine + ", endLine=" + endLine + "]";
 	}
-	
+
 }

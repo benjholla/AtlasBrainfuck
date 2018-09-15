@@ -3,35 +3,21 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.jupiter.api.Test;
 
-import com.benjholla.brainfuck.ast.Program;
 import com.benjholla.brainfuck.interpreter.BrainfuckInterpreter;
-import com.benjholla.brainfuck.parser.BrainfuckLexer;
-import com.benjholla.brainfuck.parser.BrainfuckParser;
 
 class TestInterpreter {
 
 	@Test
 	void testHelloWorld() throws Exception {
 		File source = new File("examples" + File.separator + "hello.b");
-		FileInputStream fis = new FileInputStream(source);
-		CharStream input = CharStreams.fromStream(fis);
-		BrainfuckLexer lexer = new BrainfuckLexer(input);
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		BrainfuckParser parser = new BrainfuckParser(tokens);
-		parser.setFile(source);
-		Program program = parser.program().prog;
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		BrainfuckInterpreter.execute(program, null, output);
+		BrainfuckInterpreter.execute(source, null, output);
 		String result = new String(output.toByteArray(), "UTF-8").trim();
 		if(!result.equals("Hello World!")) {
 			fail("Incorrect output");
@@ -41,15 +27,8 @@ class TestInterpreter {
 	@Test
 	void testFibonacciSequence() throws Exception {
 		File source = new File("examples" + File.separator + "fib-small.b");
-		FileInputStream fis = new FileInputStream(source);
-		CharStream input = CharStreams.fromStream(fis);
-		BrainfuckLexer lexer = new BrainfuckLexer(input);
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		BrainfuckParser parser = new BrainfuckParser(tokens);
-		parser.setFile(source);
-		Program program = parser.program().prog;
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		BrainfuckInterpreter.execute(program, null, output);
+		BrainfuckInterpreter.execute(source, null, output);
 		String result = new String(output.toByteArray(), "UTF-8").trim();
 		if(!result.equals("1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89")) {
 			fail("Incorrect output");
@@ -59,15 +38,8 @@ class TestInterpreter {
 	@Test
 	void testQuine() throws Exception {
 		File source = new File("examples" + File.separator + "quine.b");
-		FileInputStream fis = new FileInputStream(source);
-		CharStream input = CharStreams.fromStream(fis);
-		BrainfuckLexer lexer = new BrainfuckLexer(input);
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		BrainfuckParser parser = new BrainfuckParser(tokens);
-		parser.setFile(source);
-		Program program = parser.program().prog;
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		BrainfuckInterpreter.execute(program, null, output);
+		BrainfuckInterpreter.execute(source, null, output);
 		String result = new String(output.toByteArray(), Charset.forName("UTF-8")).trim();
 		if(!result.equals(readFile(source, Charset.forName("UTF-8")).trim())) {
 			fail("Incorrect output");

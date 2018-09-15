@@ -1,4 +1,4 @@
-package com.benjholla.atlas.brainfuck.frontend;
+package com.benjholla.atlas.brainfuck.indexer;
 
 import java.io.File;
 import java.util.Collection;
@@ -9,13 +9,16 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 
+import com.benjholla.atlas.brainfuck.common.XCSG;
 import com.benjholla.atlas.brainfuck.log.Log;
 import com.benjholla.brainfuck.ast.Program;
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
 import com.benjholla.eclipse.brainfuck.projects.BrainfuckNature;
 import com.benjholla.eclipse.brainfuck.projects.BrainfuckProject;
 import com.ensoftcorp.atlas.core.db.graph.Edge;
 import com.ensoftcorp.atlas.core.db.graph.EditableGraph;
 import com.ensoftcorp.atlas.core.db.graph.Node;
+import com.ensoftcorp.atlas.core.index.common.SourceCorrespondence;
 import com.ensoftcorp.atlas.core.indexing.IMappingSettings;
 import com.ensoftcorp.atlas.core.indexing.Parser;
 import com.ensoftcorp.atlas.core.indexing.Visitor;
@@ -28,9 +31,12 @@ public class BrainfuckIndexer implements com.ensoftcorp.atlas.core.indexing.prov
 	private static void index(BrainfuckAST ast, EditableGraph graph, Node projectNode, SubMonitor monitor) throws Exception {
 		Log.info("Indexing: " + ast.getBrainfuckProject().getProject().getName());
 		
+		// register the Brainfuck XCSG schema
+		XCSG.Brainfuck.registerSchema();
+		
 		// index the program
 		for(Program program : ast.getASTForest()) {
-			File sourceFile = program.getSourceCorrespondence().getSource();
+			File sourceFile = program.getParserSourceCorrespondence().getSource();
 			String sourceFileName = sourceFile.getName();
 			monitor.subTask("Processing: " + sourceFileName);
 			
@@ -38,6 +44,9 @@ public class BrainfuckIndexer implements com.ensoftcorp.atlas.core.indexing.prov
 			Node namespaceNode = graph.createNode();
 			namespaceNode.tag(XCSG.Namespace);
 			namespaceNode.putAttr(XCSG.name, sourceFileName);
+			ParserSourceCorrespondence psc = program.getParserSourceCorrespondence();
+			SourceCorrespondence namespaceSC = new SourceCorrespondence(WorkspaceUtils.getFile(psc.getSource()), psc.getOffset(), psc.getLength(), psc.getStartLine(), psc.getEndLine());
+			namespaceNode.putAttr(XCSG.sourceCorrespondence, namespaceSC);
 			
 			// make the project contain the namespace
 			Edge containsEdge = graph.createEdge(projectNode, namespaceNode);
@@ -52,6 +61,7 @@ public class BrainfuckIndexer implements com.ensoftcorp.atlas.core.indexing.prov
 				sourceFileName = sourceFileName.substring(0, sourceFileName.lastIndexOf("."));
 			}
 			implicitFunctionNode.putAttr(XCSG.name, sourceFileName);
+			namespaceNode.putAttr(XCSG.sourceCorrespondence, namespaceSC);
 			
 			// make the namespace contain the implicit function
 			containsEdge = graph.createEdge(namespaceNode, implicitFunctionNode);

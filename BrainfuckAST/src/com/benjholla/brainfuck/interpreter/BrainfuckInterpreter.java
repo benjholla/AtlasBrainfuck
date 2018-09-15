@@ -1,5 +1,8 @@
 package com.benjholla.brainfuck.interpreter;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,9 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+
 import com.benjholla.brainfuck.ast.Instruction;
 import com.benjholla.brainfuck.ast.LoopInstruction;
 import com.benjholla.brainfuck.ast.Program;
+import com.benjholla.brainfuck.parser.BrainfuckLexer;
+import com.benjholla.brainfuck.parser.BrainfuckParser;
 
 /**
  * A Brainfuck Interpreter implementation using a parsed Brainfuck AST.
@@ -27,15 +36,15 @@ import com.benjholla.brainfuck.ast.Program;
 public class BrainfuckInterpreter {
 
 	/**
-	 * Executes a brainfuck program with the given input and output streams
+	 * Executes a brainfuck program with the given input, output, and debug streams
 	 * 
 	 * @param program
 	 * @param input
 	 * @param output
 	 * 
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public static void execute(Program program, InputStream input, OutputStream output) throws IOException {
+	public static void execute(String program, InputStream input, OutputStream output) throws IOException {
 		execute(program, input, output, null);
 	}
 	
@@ -49,7 +58,62 @@ public class BrainfuckInterpreter {
 	 * 
 	 * @throws IOException
 	 */
-	public static void execute(Program program, InputStream input, OutputStream output, OutputStream debug) throws IOException {
+	public static void execute(String program, InputStream input, OutputStream output, OutputStream debug) throws IOException {
+		InputStream codeStream = new ByteArrayInputStream(program.getBytes());
+		CharStream codeInputStream = CharStreams.fromStream(codeStream);
+		BrainfuckLexer lexer = new BrainfuckLexer(codeInputStream);
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		BrainfuckParser parser = new BrainfuckParser(tokens);
+		parser.setFile(null);
+		Program ast = parser.program().prog;
+		execute(ast, input, output, null);
+	}
+	
+	/**
+	 * Executes a brainfuck program with the given input, output, and debug streams
+	 * 
+	 * @param program
+	 * @param input
+	 * @param output
+	 * 
+	 * @throws IOException
+	 */
+	public static void execute(File program, InputStream input, OutputStream output) throws IOException {
+		execute(program, input, output, null);
+	}
+	
+	/**
+	 * Executes a brainfuck program with the given input, output, and debug streams
+	 * 
+	 * @param program
+	 * @param input
+	 * @param output
+	 * @param debug
+	 * 
+	 * @throws IOException
+	 */
+	public static void execute(File program, InputStream input, OutputStream output, OutputStream debug) throws IOException {
+		FileInputStream fis = new FileInputStream(program);
+		CharStream codeInputStream = CharStreams.fromStream(fis);
+		BrainfuckLexer lexer = new BrainfuckLexer(codeInputStream);
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		BrainfuckParser parser = new BrainfuckParser(tokens);
+		parser.setFile(program);
+		Program ast = parser.program().prog;
+		execute(ast, input, output, null);
+	}
+	
+	/**
+	 * Executes a brainfuck program with the given input, output, and debug streams
+	 * 
+	 * @param program
+	 * @param input
+	 * @param output
+	 * @param debug
+	 * 
+	 * @throws IOException
+	 */
+	private static void execute(Program program, InputStream input, OutputStream output, OutputStream debug) throws IOException {
 		// initialize the tape to 1 cell with value 0
 		// memory is unbounded in this implementation
 		ArrayList<Byte> memory = new ArrayList<Byte>();

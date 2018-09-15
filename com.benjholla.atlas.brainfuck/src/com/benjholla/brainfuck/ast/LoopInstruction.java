@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.eclipse.core.runtime.SubMonitor;
 
-import com.benjholla.atlas.brainfuck.frontend.XCSG;
+import com.benjholla.atlas.brainfuck.common.XCSG;
+import com.benjholla.atlas.brainfuck.indexer.WorkspaceUtils;
 import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
 import com.ensoftcorp.atlas.core.db.graph.Edge;
 import com.ensoftcorp.atlas.core.db.graph.EditableGraph;
 import com.ensoftcorp.atlas.core.db.graph.Node;
 import com.ensoftcorp.atlas.core.db.set.AtlasSet;
+import com.ensoftcorp.atlas.core.index.common.SourceCorrespondence;
 
 public class LoopInstruction extends Instruction {
 
@@ -49,6 +51,10 @@ public class LoopInstruction extends Instruction {
 		loopHeader.putAttr(XCSG.name, getType().toString());
 		loopHeader.tag(XCSG.ControlFlowCondition);
 		loopHeader.tag(XCSG.Loop);
+		
+		// set the loop headers node's source correspondence
+		// selecting a loop header will highlight the entire loop
+		loopHeader.putAttr(XCSG.sourceCorrespondence, new SourceCorrespondence(WorkspaceUtils.getFile(psc.getSource()), psc.getOffset(), psc.getLength(), psc.getStartLine(), psc.getEndLine()));
 		
 		// make the container node contain the loop header
 		Edge containsEdge = graph.createEdge(containerNode, loopHeader);
@@ -103,6 +109,10 @@ public class LoopInstruction extends Instruction {
 		loopFooter.tag(XCSG.ControlFlow_Node);
 		loopHeader.tag(XCSG.ControlFlowCondition);
 		loopFooter.putAttr(XCSG.name, "]");
+		
+		// set the loop headers node's source correspondence
+		// selecting a loop footer will highlight just the loop footer
+		loopFooter.putAttr(XCSG.sourceCorrespondence, new SourceCorrespondence(WorkspaceUtils.getFile(psc.getSource()), (psc.getOffset()+psc.getLength()-1), 1, psc.getEndLine(), psc.getEndLine()));
 		
 		// make the container node contain the loop header
 		containsEdge = graph.createEdge(containerNode, loopFooter);

@@ -11,7 +11,7 @@ public abstract class ASTNode {
 	/**
 	 * The corresponding source code
 	 */
-	protected ParserSourceCorrespondence sc;
+	protected ParserSourceCorrespondence psc;
 	
 	/**
 	 * Builds a new tree node
@@ -20,7 +20,7 @@ public abstract class ASTNode {
 	 *            the line in the source file from which this node came.
 	 */
 	protected ASTNode(ParserSourceCorrespondence sc) {
-		this.sc = sc;
+		this.psc = sc;
 	}
 	
 	/**
@@ -31,7 +31,7 @@ public abstract class ASTNode {
 	 * @return this node
 	 */
 	public ASTNode set(ASTNode other) {
-		this.sc = other.sc;
+		this.psc = other.psc;
 		return this;
 	}
 
@@ -40,12 +40,12 @@ public abstract class ASTNode {
 	 *
 	 * @return the line number
 	 */
-	public ParserSourceCorrespondence getSourceCorrespondence() {
-		return sc;
+	public ParserSourceCorrespondence getParserSourceCorrespondence() {
+		return psc;
 	}
 	
 	public String toString(){
-		return "ASTNode " + this.getClass().getSimpleName() + " [" + sc.toString() + "]";
+		return "ASTNode " + this.getClass().getSimpleName() + " [" + psc.toString() + "]";
 	}
 	
 	public abstract Node index(EditableGraph graph, Node containerNode, SubMonitor monitor);

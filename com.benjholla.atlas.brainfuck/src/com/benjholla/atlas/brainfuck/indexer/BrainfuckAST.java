@@ -1,4 +1,4 @@
-package com.benjholla.atlas.brainfuck.frontend;
+package com.benjholla.atlas.brainfuck.indexer;
 
 import java.io.File;
 import java.io.FileInputStream;

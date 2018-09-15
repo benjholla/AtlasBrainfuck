@@ -2,11 +2,13 @@ package com.benjholla.brainfuck.ast;
 
 import org.eclipse.core.runtime.SubMonitor;
 
-import com.benjholla.atlas.brainfuck.frontend.XCSG;
+import com.benjholla.atlas.brainfuck.common.XCSG;
+import com.benjholla.atlas.brainfuck.indexer.WorkspaceUtils;
 import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
 import com.ensoftcorp.atlas.core.db.graph.Edge;
 import com.ensoftcorp.atlas.core.db.graph.EditableGraph;
 import com.ensoftcorp.atlas.core.db.graph.Node;
+import com.ensoftcorp.atlas.core.index.common.SourceCorrespondence;
 
 public abstract class Instruction extends ASTNode {
 
@@ -42,6 +44,10 @@ public abstract class Instruction extends ASTNode {
 		Node instructionNode = graph.createNode();
 		instructionNode.tag(XCSG.ControlFlow_Node);
 		instructionNode.putAttr(XCSG.name, getType().toString());
+		
+		// set the instruction node's source correspondence
+		SourceCorrespondence sc = new SourceCorrespondence(WorkspaceUtils.getFile(psc.getSource()), psc.getOffset(), psc.getLength(), psc.getStartLine(), psc.getEndLine());
+		instructionNode.putAttr(XCSG.sourceCorrespondence, sc);
 		
 		// make the container node contain the loop header
 		Edge containsEdge = graph.createEdge(containerNode, instructionNode);

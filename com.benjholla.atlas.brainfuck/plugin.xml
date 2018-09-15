@@ -7,7 +7,7 @@
         name="BrainfuckLanguageIndexingProviderFactory"
         point="com.ensoftcorp.atlas.core.LanguageIndexingProviderFactories">
      <ProviderFactory
-           class="com.benjholla.atlas.brainfuck.frontend.BrainfuckIndexer">
+           class="com.benjholla.atlas.brainfuck.indexer.BrainfuckIndexer">
      </ProviderFactory>
   </extension>
   

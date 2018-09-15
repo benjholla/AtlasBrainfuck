@@ -122,7 +122,7 @@ public class BrainfuckParser extends Parser {
 	public static class ProgramContext extends ParserRuleContext {
 		public Program prog;
 		public Instruction_listContext instructions;
-		public Token end;
+		public Token eof;
 
 		public Instruction_listContext instruction_list() {
 			return getRuleContext(Instruction_listContext.class, 0);
@@ -171,17 +171,18 @@ public class BrainfuckParser extends Parser {
 				setState(8);
 				((ProgramContext) _localctx).instructions = instruction_list();
 				setState(9);
-				((ProgramContext) _localctx).end = match(EOF);
+				((ProgramContext) _localctx).eof = match(EOF);
 
 				ParserSourceCorrespondence sc;
 				if (((ProgramContext) _localctx).instructions.list.isEmpty()) {
-					sc = new ParserSourceCorrespondence(file, 0, 0, 0);
+					sc = new ParserSourceCorrespondence(file, 0, 0, 0, 0);
 				} else {
 					ParserSourceCorrespondence firstInstructionSC = ((ProgramContext) _localctx).instructions.list
-							.get(0).getSourceCorrespondence();
-					long eof = ((ProgramContext) _localctx).end.getStartIndex();
-					sc = new ParserSourceCorrespondence(file, firstInstructionSC.getLine(),
-							firstInstructionSC.getOffset(), (eof - firstInstructionSC.getOffset()));
+							.get(0).getParserSourceCorrespondence();
+					sc = new ParserSourceCorrespondence(file, firstInstructionSC.getOffset(),
+							((int) ((ProgramContext) _localctx).eof.getStartIndex()
+									- (int) firstInstructionSC.getOffset()),
+							firstInstructionSC.getStartLine(), ((ProgramContext) _localctx).eof.getLine());
 				}
 				((ProgramContext) _localctx).prog = new Program(sc, ((ProgramContext) _localctx).instructions.list);
 
@@ -366,9 +367,10 @@ public class BrainfuckParser extends Parser {
 				((InstructionContext) _localctx).tape_increment = match(TAPE_INCREMENT);
 
 				ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file,
-						((InstructionContext) _localctx).tape_increment.getLine(),
 						((InstructionContext) _localctx).tape_increment.getStartIndex(),
-						((InstructionContext) _localctx).tape_increment.getText().length());
+						((InstructionContext) _localctx).tape_increment.getText().length(),
+						((InstructionContext) _localctx).tape_increment.getLine(),
+						((InstructionContext) _localctx).tape_increment.getLine());
 				((InstructionContext) _localctx).value = new IncrementInstruction(sc);
 
 			}
@@ -379,9 +381,10 @@ public class BrainfuckParser extends Parser {
 				((InstructionContext) _localctx).tape_decrement = match(TAPE_DECREMENT);
 
 				ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file,
-						((InstructionContext) _localctx).tape_decrement.getLine(),
 						((InstructionContext) _localctx).tape_decrement.getStartIndex(),
-						((InstructionContext) _localctx).tape_decrement.getText().length());
+						((InstructionContext) _localctx).tape_decrement.getText().length(),
+						((InstructionContext) _localctx).tape_decrement.getLine(),
+						((InstructionContext) _localctx).tape_decrement.getLine());
 				((InstructionContext) _localctx).value = new DecrementInstruction(sc);
 
 			}
@@ -392,9 +395,10 @@ public class BrainfuckParser extends Parser {
 				((InstructionContext) _localctx).tape_left = match(TAPE_LEFT);
 
 				ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file,
-						((InstructionContext) _localctx).tape_left.getLine(),
 						((InstructionContext) _localctx).tape_left.getStartIndex(),
-						((InstructionContext) _localctx).tape_left.getText().length());
+						((InstructionContext) _localctx).tape_left.getText().length(),
+						((InstructionContext) _localctx).tape_left.getLine(),
+						((InstructionContext) _localctx).tape_left.getLine());
 				((InstructionContext) _localctx).value = new MoveLeftInstruction(sc);
 
 			}
@@ -405,9 +409,10 @@ public class BrainfuckParser extends Parser {
 				((InstructionContext) _localctx).tape_right = match(TAPE_RIGHT);
 
 				ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file,
-						((InstructionContext) _localctx).tape_right.getLine(),
 						((InstructionContext) _localctx).tape_right.getStartIndex(),
-						((InstructionContext) _localctx).tape_right.getText().length());
+						((InstructionContext) _localctx).tape_right.getText().length(),
+						((InstructionContext) _localctx).tape_right.getLine(),
+						((InstructionContext) _localctx).tape_right.getLine());
 				((InstructionContext) _localctx).value = new MoveRightInstruction(sc);
 
 			}
@@ -418,9 +423,10 @@ public class BrainfuckParser extends Parser {
 				((InstructionContext) _localctx).input = match(INPUT);
 
 				ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file,
-						((InstructionContext) _localctx).input.getLine(),
 						((InstructionContext) _localctx).input.getStartIndex(),
-						((InstructionContext) _localctx).input.getText().length());
+						((InstructionContext) _localctx).input.getText().length(),
+						((InstructionContext) _localctx).input.getLine(),
+						((InstructionContext) _localctx).input.getLine());
 				((InstructionContext) _localctx).value = new ReadInputInstruction(sc);
 
 			}
@@ -431,9 +437,10 @@ public class BrainfuckParser extends Parser {
 				((InstructionContext) _localctx).output = match(OUTPUT);
 
 				ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file,
-						((InstructionContext) _localctx).output.getLine(),
 						((InstructionContext) _localctx).output.getStartIndex(),
-						((InstructionContext) _localctx).output.getText().length());
+						((InstructionContext) _localctx).output.getText().length(),
+						((InstructionContext) _localctx).output.getLine(),
+						((InstructionContext) _localctx).output.getLine());
 				((InstructionContext) _localctx).value = new WriteOutputInstruction(sc);
 
 			}
@@ -504,11 +511,11 @@ public class BrainfuckParser extends Parser {
 				setState(39);
 				((LoopContext) _localctx).rbrace = match(T__1);
 
-				long length = ((LoopContext) _localctx).rbrace.getStartIndex()
+				int length = ((LoopContext) _localctx).rbrace.getStartIndex()
 						- ((LoopContext) _localctx).lbrace.getStartIndex();
 				ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file,
-						((LoopContext) _localctx).lbrace.getLine(), ((LoopContext) _localctx).lbrace.getStartIndex(),
-						length);
+						((LoopContext) _localctx).lbrace.getStartIndex(), length,
+						((LoopContext) _localctx).lbrace.getLine(), ((LoopContext) _localctx).rbrace.getLine());
 				((LoopContext) _localctx).value = new LoopInstruction(sc, ((LoopContext) _localctx).instructions.list);
 
 			}
