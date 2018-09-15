@@ -1,6 +1,7 @@
 package com.benjholla.atlas.brainfuck.interpreter;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,6 +36,21 @@ import com.benjholla.brainfuck.parser.BrainfuckParser;
  */
 public class BrainfuckInterpreter {
 
+	/**
+	 * Executes a brainfuck program with the given input, output, and debug streams
+	 * 
+	 * @param program
+	 * @param input
+	 * @param output
+	 * 
+	 * @throws IOException
+	 */
+	public static String execute(String program, String input) throws IOException {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		execute(program, new ByteArrayInputStream(input.getBytes()), output, null);
+		return new String(output.toByteArray(), "UTF-8");
+	}
+	
 	/**
 	 * Executes a brainfuck program with the given input, output, and debug streams
 	 * 
