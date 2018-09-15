@@ -61,7 +61,7 @@ public class Program extends ASTNode {
 				controlFlowEdge.tag(XCSG.ControlFlow_Edge);
 				if(previousInstructionNode.taggedWith(XCSG.Loop)) {
 					Node header = previousInstructionNode;
-					controlFlowEdge.putAttr(XCSG.conditionValue, true); // any non-zero value
+					controlFlowEdge.putAttr(XCSG.conditionValue, false); // 0 value
 					
 					// link the footer up to the next instruction
 					AtlasSet<Edge> backEdges = graph.edges().taggedWithAny(XCSG.ControlFlowBackEdge);

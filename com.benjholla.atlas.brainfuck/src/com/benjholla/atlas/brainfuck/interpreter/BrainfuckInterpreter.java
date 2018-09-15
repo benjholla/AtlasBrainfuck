@@ -37,7 +37,20 @@ import com.benjholla.brainfuck.parser.BrainfuckParser;
 public class BrainfuckInterpreter {
 
 	/**
-	 * Executes a brainfuck program with the given input, output, and debug streams
+	 * Executes a brainfuck program with an empty input, returning the output as a string
+	 * 
+	 * @param program
+	 * @param input
+	 * @param output
+	 * 
+	 * @throws IOException
+	 */
+	public static String execute(String program) throws IOException {
+		return execute(program, "");
+	}
+	
+	/**
+	 * Executes a brainfuck program with an empty input, returning the output as a string
 	 * 
 	 * @param program
 	 * @param input
@@ -83,6 +96,34 @@ public class BrainfuckInterpreter {
 		parser.setFile(null);
 		Program ast = parser.program().prog;
 		execute(ast, input, output, null);
+	}
+	
+	/**
+	 * Executes a brainfuck program with an empty input, returning the output as a string
+	 * 
+	 * @param program
+	 * @param input
+	 * @param output
+	 * 
+	 * @throws IOException
+	 */
+	public static String execute(File program) throws IOException {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		execute(program, new ByteArrayInputStream("".getBytes()), output, null);
+		return new String(output.toByteArray(), "UTF-8");
+	}
+	
+	/**
+	 * Executes a brainfuck program with the given input, returning the output as a string
+	 * 
+	 * @param program
+	 * @param input
+	 * @param output
+	 * 
+	 * @throws IOException
+	 */
+	public static String execute(File program, String input) throws IOException {
+		return execute(program, input);
 	}
 	
 	/**

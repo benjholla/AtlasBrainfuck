@@ -71,11 +71,11 @@ public class LoopInstruction extends Instruction {
 			Edge loopChildEdge = graph.createEdge(loopHeader, instructionNode);
 			loopChildEdge.tag(XCSG.LoopChild);
 			
-			// tag the root/exit nodes appropriately
+			// tag the cfg root/exit nodes appropriately
 			if(i == 0) {
 				Edge loopEntryEdge = graph.createEdge(loopHeader, instructionNode);
 				loopEntryEdge.tag(XCSG.ControlFlow_Edge);
-				loopEntryEdge.putAttr(XCSG.conditionValue, false); // 0 value
+				loopEntryEdge.putAttr(XCSG.conditionValue, true); // any non-zero value
 			}
 			
 			// create the control flow edge relationship if this isn't the first instruction
@@ -84,7 +84,7 @@ public class LoopInstruction extends Instruction {
 				controlFlowEdge.tag(XCSG.ControlFlow_Edge);
 				if(previousInstructionNode.taggedWith(XCSG.Loop)) {
 					Node header = previousInstructionNode;
-					controlFlowEdge.putAttr(XCSG.conditionValue, true); // any non-zero value
+					controlFlowEdge.putAttr(XCSG.conditionValue, false); // 0 value
 					
 					// link the footer up to the next instruction
 					AtlasSet<Edge> backEdges = graph.edges().taggedWithAny(XCSG.ControlFlowBackEdge);
@@ -107,7 +107,7 @@ public class LoopInstruction extends Instruction {
 		// create the loop footer node
 		Node loopFooter = graph.createNode();
 		loopFooter.tag(XCSG.ControlFlow_Node);
-		loopHeader.tag(XCSG.ControlFlowCondition);
+		loopFooter.tag(XCSG.ControlFlowCondition);
 		loopFooter.putAttr(XCSG.name, "]");
 		
 		// set the loop headers node's source correspondence
@@ -119,8 +119,8 @@ public class LoopInstruction extends Instruction {
 		containsEdge.tag(XCSG.Contains);
 		
 		// create exit edge
-		Edge loopExitEdge = graph.createEdge(previousInstructionNode, loopFooter);
-		loopExitEdge.tag(XCSG.ControlFlow_Edge);
+		Edge loopFooterEdge = graph.createEdge(previousInstructionNode, loopFooter);
+		loopFooterEdge.tag(XCSG.ControlFlow_Edge);
 		
 		// create loop back edge
 		Edge loopBackEdge = graph.createEdge(loopFooter, loopHeader);

@@ -18,7 +18,7 @@ import com.ensoftcorp.atlas.core.script.CommonQueries;
 public class BrainfuckGraphInterpreter {
 
 	/**
-	 * Executes a brainfuck program with the given input, output, and debug streams
+	 * Executes a brainfuck program with an empty input, returning the output as a string
 	 * 
 	 * @param program
 	 * @param input
@@ -26,7 +26,20 @@ public class BrainfuckGraphInterpreter {
 	 * 
 	 * @throws IOException
 	 */
-	public static String execute(Node program, String input) throws IOException {
+	public static String execute(Q program) throws IOException {
+		return execute(program, "");
+	}
+	
+	/**
+	 * Executes a brainfuck program with the given input and returning the output as as string
+	 * 
+	 * @param program
+	 * @param input
+	 * @param output
+	 * 
+	 * @throws IOException
+	 */
+	public static String execute(Q program, String input) throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		execute(program, new ByteArrayInputStream(input.getBytes()), output, null);
 		return new String(output.toByteArray(), "UTF-8");
@@ -58,10 +71,38 @@ public class BrainfuckGraphInterpreter {
 	public static void execute(Q program, InputStream input, OutputStream output, OutputStream debug) throws IOException {
 		AtlasSet<Node> nodes = program.eval().nodes();
 		if(!nodes.isEmpty()) {
-			throw new IllegalArgumentException("No program nodes were specified");
-		} else {
 			execute(nodes.one(), input, output, debug);
+		} else {
+			throw new IllegalArgumentException("No program nodes were specified");
 		}
+	}
+	
+	/**
+	 * Executes a brainfuck program with an empty input, returning the output as a string
+	 * 
+	 * @param program
+	 * @param input
+	 * @param output
+	 * 
+	 * @throws IOException
+	 */
+	public static String execute(Node program) throws IOException {
+		return execute(program);
+	}
+	
+	/**
+	 * Executes a brainfuck program with the given input, output, and debug streams
+	 * 
+	 * @param program
+	 * @param input
+	 * @param output
+	 * 
+	 * @throws IOException
+	 */
+	public static String execute(Node program, String input) throws IOException {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		execute(program, new ByteArrayInputStream(input.getBytes()), output, null);
+		return new String(output.toByteArray(), "UTF-8");
 	}
 	
 	/**
@@ -138,7 +179,8 @@ public class BrainfuckGraphInterpreter {
 			int mp = 0;
 			
 			// execute instructions until there are no more to execute
-			Q cfg = CommonQueries.cfg(Common.toQ(nextInstruction).parent());
+			Q cfg = Common.toQ(CommonQueries.cfg(Common.toQ(nextInstruction).parent()).eval());
+			Q loopChildEdges = Common.toQ(cfg.retainNodes().induce(Common.universe().edges(XCSG.LoopChild)).retainEdges().eval());
 			do {
 				if(nextInstruction.taggedWith(XCSG.Operator)) {
 					if(nextInstruction.taggedWith(XCSG.Brainfuck.IncrementOperator)) {
@@ -165,50 +207,35 @@ public class BrainfuckGraphInterpreter {
 					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.WriteOutputOperator)) {
 						output.write(new byte[] {memory.get(mp)});
 					} else {
-						throw new IllegalArgumentException("Error: Control flow operator was an unknown operator type.");
+						throw new IllegalArgumentException("Error: Control flow operator [" + nextInstruction.address().toAddressString() + "] was an unknown operator type.");
 					}
 					
 					AtlasSet<Node> successors = cfg.successors(Common.toQ(nextInstruction)).eval().nodes();
 					if(successors.size() > 1) {
-						throw new IllegalArgumentException("Error: Control flow operator node unexpectedly had multiple successors.");
+						throw new IllegalArgumentException("Error: Control flow operator node [" + nextInstruction.address().toAddressString() + "] unexpectedly had multiple successors.");
 					} else {
 						nextInstruction = successors.one();
 					}
 				} else {
 					Q conditionalEdges = cfg.forwardStep(Common.toQ(nextInstruction));
-					if(nextInstruction.taggedWith(XCSG.Loop)) {
-						// loop header
-						if (memory.get(mp) == 0) {
-							Edge falseEdge = conditionalEdges.selectEdge(XCSG.conditionValue, false, "false").eval().edges().one();
-							if(falseEdge != null) {
-								nextInstruction = falseEdge.to();
-							} else {
-								throw new IllegalArgumentException("Error: Control flow loop header false edge could not be found.");
-							}
+					if (memory.get(mp) == 0) {
+						Edge falseEdge = conditionalEdges.selectEdge(XCSG.conditionValue, false, "false").eval().edges().one();
+						if(falseEdge != null) {
+							nextInstruction = falseEdge.to();
 						} else {
-							Edge trueEdge = conditionalEdges.selectEdge(XCSG.conditionValue, true, "true").eval().edges().one();
-							if(trueEdge != null) {
-								nextInstruction = trueEdge.to();
+							if (!CommonQueries.isEmpty(loopChildEdges.predecessors(Common.toQ(nextInstruction)).nodes(XCSG.ControlFlowExit))) {
+								// only a problem if the loop is the last statement
+								throw new IllegalArgumentException("Error: Control flow loop false edge could not be found for [" + nextInstruction.address().toAddressString() + "].");
 							} else {
-								throw new IllegalArgumentException("Error: Control flow loop header true edge could not be found.");
+								nextInstruction = null;
 							}
 						}
 					} else {
-						// loop footer
-						if (memory.get(mp) == 0) {
-							Edge falseEdge = conditionalEdges.selectEdge(XCSG.conditionValue, false, "false").eval().edges().one();
-							if(falseEdge != null) {
-								nextInstruction = falseEdge.to();
-							} else {
-								throw new IllegalArgumentException("Error: Control flow loop footer false edge could not be found.");
-							}
+						Edge trueEdge = conditionalEdges.selectEdge(XCSG.conditionValue, true, "true").eval().edges().one();
+						if(trueEdge != null) {
+							nextInstruction = trueEdge.to();
 						} else {
-							Edge trueEdge = conditionalEdges.selectEdge(XCSG.conditionValue, true, "true").eval().edges().one();
-							if(trueEdge != null) {
-								nextInstruction = trueEdge.to();
-							} else {
-								throw new IllegalArgumentException("Error: Control flow loop footer true edge could not be found.");
-							}
+							throw new IllegalArgumentException("Error: Control flow loop true edge could not be found for [" + nextInstruction.address().toAddressString()  + "].");
 						}
 					}
 				}
