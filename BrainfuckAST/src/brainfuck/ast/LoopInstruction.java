@@ -2,10 +2,11 @@ package brainfuck.ast;
 
 import java.util.List;
 
-public class Program extends ASTNode {
+public class LoopInstruction extends Instruction {
+
 	private List<Instruction> instructions;
 
-	public Program(SourceCorrespondence sc, List<Instruction> instructions) {
+	public LoopInstruction(SourceCorrespondence sc, List<Instruction> instructions) {
 		super(sc);
 		this.instructions = instructions;
 	}
@@ -23,7 +24,11 @@ public class Program extends ASTNode {
 			}
 			cmds.append(instruction.toString());
 		}
-		return "Program: {" + cmds + "}";
+		return "Loop: [" + cmds + "]";
 	}
 	
+	@Override
+	public Type getType() {
+		return Type.LOOP;
+	}
 }

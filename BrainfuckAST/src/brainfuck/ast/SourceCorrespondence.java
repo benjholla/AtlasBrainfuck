@@ -1,4 +1,4 @@
-package brainfuck;
+package brainfuck.ast;
 
 import java.io.File;
 

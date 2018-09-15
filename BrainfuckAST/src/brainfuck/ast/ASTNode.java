@@ -1,7 +1,5 @@
 package brainfuck.ast;
 
-import brainfuck.SourceCorrespondence;
-
 public abstract class ASTNode {
 	
 	/**

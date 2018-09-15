@@ -3,7 +3,6 @@ grammar Brainfuck;
 @header{
 	package brainfuck.parser; 
 	
-	import brainfuck.*;
 	import brainfuck.ast.*;
 	import java.util.List;
 	import java.io.File;
@@ -22,69 +21,69 @@ grammar Brainfuck;
 }
 
 program returns [Program prog]
-   : commands=command_list EOF
+   : instructions=instruction_list EOF
    {
    	  SourceCorrespondence sc;
-   	  if($commands.list.isEmpty()){
+   	  if($instructions.list.isEmpty()){
    	     sc = new SourceCorrespondence(file, 0, 0, 0);
    	  } else {
-   	     SourceCorrespondence firstCommandSC = $commands.list.get(0).getSourceCorrespondence();
-   	     sc = new SourceCorrespondence(file, firstCommandSC.getLine(), firstCommandSC.getOffset(), _ctx.getStart().getText().length()); 
+   	     SourceCorrespondence firstInstructionSC = $instructions.list.get(0).getSourceCorrespondence();
+   	     sc = new SourceCorrespondence(file, firstInstructionSC.getLine(), firstInstructionSC.getOffset(), _ctx.getStart().getText().length()); 
    	  }
-      $prog = new Program(sc, $commands.list);
+      $prog = new Program(sc, $instructions.list);
    }
    ;
 
-command_list returns [ArrayList<Command> list]
+instruction_list returns [ArrayList<Instruction> list]
    @init
    {
-      $list = new ArrayList<Command>();
+      $list = new ArrayList<Instruction>();
    }
-   : (c = command {$list.add($c.value);})*
+   : (c = instruction {$list.add($c.value);})*
    ;
 
-command returns [Command value] 
+instruction returns [Instruction value] 
    : l=loop
    {
       SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
-      $value = new LoopCommand(sc, $l.list);
+      $value = new LoopInstruction(sc, $l.list);
    }
    | ti=TAPE_INCREMENT
    {
       SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
-      $value = new IncrementCommand(sc);
+      $value = new IncrementInstruction(sc);
    }
    | td=TAPE_DECREMENT
    {
       SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
-      $value = new DecrementCommand(sc);
+      $value = new DecrementInstruction(sc);
    }
    | tl=TAPE_LEFT
    {
       SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
-      $value = new MoveLeftCommand(sc);
+      $value = new MoveLeftInstruction(sc);
    }
    | tr=TAPE_RIGHT
    {
       SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
-      $value = new MoveRightCommand(sc);
+      $value = new MoveRightInstruction(sc);
    }
    | i=INPUT
    {
       SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
-      $value = new InputCommand(sc);
+      $value = new ReadInputInstruction(sc);
    }
    | o=OUTPUT
    {
       SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
-      $value = new OutputCommand(sc);
+      $value = new WriteOutputInstruction(sc);
    }
    ;
          
-loop returns [ArrayList<Command> list]
-   : '[' commands=command_list ']'
+loop returns [ArrayList<Instruction> list]
+   : '[' instructions=instruction_list ']'
    {
-      $list = $commands.list;
+      $list = $instructions.list;
    }
    ;
 
