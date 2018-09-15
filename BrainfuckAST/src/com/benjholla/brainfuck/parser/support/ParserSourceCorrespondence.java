@@ -1,15 +1,15 @@
-package com.benjholla.brainfuck.ast;
+package com.benjholla.brainfuck.parser.support;
 
 import java.io.File;
 
-public class SourceCorrespondence {
+public class ParserSourceCorrespondence {
 
 	private File source = null;
 	private int line = 0;
 	private long offset = 0;
 	private long length = 0;
 
-	public SourceCorrespondence(File source, int line, long offset, long length) {
+	public ParserSourceCorrespondence(File source, int line, long offset, long length) {
 		this.source = source;
 		this.line = line;
 		this.offset = offset;

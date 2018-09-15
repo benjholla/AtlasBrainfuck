@@ -1,11 +1,13 @@
 package com.benjholla.brainfuck.ast;
 
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
+
 public abstract class ASTNode {
 	
 	/**
 	 * The corresponding source code
 	 */
-	protected SourceCorrespondence sc;
+	protected ParserSourceCorrespondence sc;
 	
 	/**
 	 * Builds a new tree node
@@ -13,7 +15,7 @@ public abstract class ASTNode {
 	 * @param lineNumber
 	 *            the line in the source file from which this node came.
 	 */
-	protected ASTNode(SourceCorrespondence sc) {
+	protected ASTNode(ParserSourceCorrespondence sc) {
 		this.sc = sc;
 	}
 	
@@ -34,7 +36,7 @@ public abstract class ASTNode {
 	 *
 	 * @return the line number
 	 */
-	public SourceCorrespondence getSourceCorrespondence() {
+	public ParserSourceCorrespondence getSourceCorrespondence() {
 		return sc;
 	}
 	

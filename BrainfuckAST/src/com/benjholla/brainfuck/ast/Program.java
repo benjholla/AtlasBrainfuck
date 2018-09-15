@@ -2,10 +2,12 @@ package com.benjholla.brainfuck.ast;
 
 import java.util.List;
 
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
+
 public class Program extends ASTNode {
 	private List<Instruction> instructions;
 
-	public Program(SourceCorrespondence sc, List<Instruction> instructions) {
+	public Program(ParserSourceCorrespondence sc, List<Instruction> instructions) {
 		super(sc);
 		this.instructions = instructions;
 	}

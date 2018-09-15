@@ -1,10 +1,10 @@
 package com.benjholla.brainfuck.ast;
 
-import com.benjholla.atlas.brainfuck.common.SourceCorrespondence;
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
 
 public class WriteOutputInstruction extends Instruction {
 
-	public WriteOutputInstruction(SourceCorrespondence sc) {
+	public WriteOutputInstruction(ParserSourceCorrespondence sc) {
 		super(sc);
 	}
 

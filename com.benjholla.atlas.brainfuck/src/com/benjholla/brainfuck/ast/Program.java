@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.SubMonitor;
 
-import com.benjholla.atlas.brainfuck.common.SourceCorrespondence;
 import com.benjholla.atlas.brainfuck.frontend.XCSG;
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
 import com.ensoftcorp.atlas.core.db.graph.Edge;
 import com.ensoftcorp.atlas.core.db.graph.EditableGraph;
 import com.ensoftcorp.atlas.core.db.graph.Node;
@@ -14,7 +14,7 @@ import com.ensoftcorp.atlas.core.db.set.AtlasSet;
 public class Program extends ASTNode {
 	private List<Instruction> instructions;
 
-	public Program(SourceCorrespondence sc, List<Instruction> instructions) {
+	public Program(ParserSourceCorrespondence sc, List<Instruction> instructions) {
 		super(sc);
 		this.instructions = instructions;
 	}
@@ -34,7 +34,7 @@ public class Program extends ASTNode {
 		}
 		return "Program: {" + result + "}";
 	}
-
+	
 	@Override
 	public Node index(EditableGraph graph, Node containerNode, SubMonitor monitor) {
 		Node previousInstructionNode = null;

@@ -1,5 +1,7 @@
 package com.benjholla.brainfuck.ast;
 
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
+
 public abstract class Instruction extends ASTNode {
 
 	public static enum Type {
@@ -24,7 +26,7 @@ public abstract class Instruction extends ASTNode {
 	
 	public abstract Type getType();
 	
-	public Instruction(SourceCorrespondence sc) {
+	public Instruction(ParserSourceCorrespondence sc) {
 		super(sc);
 	}
 

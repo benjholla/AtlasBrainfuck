@@ -2,7 +2,7 @@ package com.benjholla.brainfuck.ast;
 
 import org.eclipse.core.runtime.SubMonitor;
 
-import com.benjholla.atlas.brainfuck.common.SourceCorrespondence;
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
 import com.ensoftcorp.atlas.core.db.graph.EditableGraph;
 import com.ensoftcorp.atlas.core.db.graph.Node;
 
@@ -11,7 +11,7 @@ public abstract class ASTNode {
 	/**
 	 * The corresponding source code
 	 */
-	protected SourceCorrespondence sc;
+	protected ParserSourceCorrespondence sc;
 	
 	/**
 	 * Builds a new tree node
@@ -19,7 +19,7 @@ public abstract class ASTNode {
 	 * @param lineNumber
 	 *            the line in the source file from which this node came.
 	 */
-	protected ASTNode(SourceCorrespondence sc) {
+	protected ASTNode(ParserSourceCorrespondence sc) {
 		this.sc = sc;
 	}
 	
@@ -40,10 +40,10 @@ public abstract class ASTNode {
 	 *
 	 * @return the line number
 	 */
-	public SourceCorrespondence getSourceCorrespondence() {
+	public ParserSourceCorrespondence getSourceCorrespondence() {
 		return sc;
 	}
-
+	
 	public String toString(){
 		return "ASTNode " + this.getClass().getSimpleName() + " [" + sc.toString() + "]";
 	}

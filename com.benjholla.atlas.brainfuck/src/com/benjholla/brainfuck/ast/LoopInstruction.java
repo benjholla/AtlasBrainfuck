@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.SubMonitor;
 
-import com.benjholla.atlas.brainfuck.common.SourceCorrespondence;
 import com.benjholla.atlas.brainfuck.frontend.XCSG;
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
 import com.ensoftcorp.atlas.core.db.graph.Edge;
 import com.ensoftcorp.atlas.core.db.graph.EditableGraph;
 import com.ensoftcorp.atlas.core.db.graph.Node;
@@ -15,7 +15,7 @@ public class LoopInstruction extends Instruction {
 
 	private List<Instruction> instructions;
 
-	public LoopInstruction(SourceCorrespondence sc, List<Instruction> instructions) {
+	public LoopInstruction(ParserSourceCorrespondence sc, List<Instruction> instructions) {
 		super(sc);
 		this.instructions = instructions;
 	}
@@ -26,14 +26,14 @@ public class LoopInstruction extends Instruction {
 
 	@Override
 	public String toString() {
-		StringBuilder cmds = new StringBuilder();
+		StringBuilder result = new StringBuilder();
 		for(Instruction instruction : instructions) {
 			if(instruction instanceof LoopInstruction) {
-				cmds.append(" ");
+				result.append(" ");
 			}
-			cmds.append(instruction.toString());
+			result.append(instruction.toString());
 		}
-		return "Loop: [" + cmds + "]";
+		return "Loop: [" + result + "]";
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ grammar Brainfuck;
 @header{
 	package com.benjholla.brainfuck.parser; 
 	
+	import com.benjholla.brainfuck.parser.support.*;
 	import com.benjholla.brainfuck.ast.*;
 	import java.util.List;
 	import java.io.File;
@@ -21,14 +22,15 @@ grammar Brainfuck;
 }
 
 program returns [Program prog]
-   : instructions=instruction_list EOF
+   : instructions=instruction_list end=EOF
    {
-   	  SourceCorrespondence sc;
+   	  ParserSourceCorrespondence sc;
    	  if($instructions.list.isEmpty()){
-   	     sc = new SourceCorrespondence(file, 0, 0, 0);
+   	     sc = new ParserSourceCorrespondence(file, 0, 0, 0);
    	  } else {
-   	     SourceCorrespondence firstInstructionSC = $instructions.list.get(0).getSourceCorrespondence();
-   	     sc = new SourceCorrespondence(file, firstInstructionSC.getLine(), firstInstructionSC.getOffset(), _ctx.getStart().getText().length()); 
+   	     ParserSourceCorrespondence firstInstructionSC = $instructions.list.get(0).getSourceCorrespondence();
+   	     long eof = $end.getStartIndex();
+   	     sc = new ParserSourceCorrespondence(file, firstInstructionSC.getLine(), firstInstructionSC.getOffset(), (eof-firstInstructionSC.getOffset())); 
    	  }
       $prog = new Program(sc, $instructions.list);
    }
@@ -45,45 +47,46 @@ instruction_list returns [ArrayList<Instruction> list]
 instruction returns [Instruction value] 
    : l=loop
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
-      $value = new LoopInstruction(sc, $l.list);
+      $value = $l.value;
    }
-   | ti=TAPE_INCREMENT
+   | tape_increment=TAPE_INCREMENT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
+      ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file, $tape_increment.getLine(), $tape_increment.getStartIndex(), $tape_increment.getText().length());
       $value = new IncrementInstruction(sc);
    }
-   | td=TAPE_DECREMENT
+   | tape_decrement=TAPE_DECREMENT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
+      ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file, $tape_decrement.getLine(), $tape_decrement.getStartIndex(), $tape_decrement.getText().length());
       $value = new DecrementInstruction(sc);
    }
-   | tl=TAPE_LEFT
+   | tape_left=TAPE_LEFT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
+      ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file, $tape_left.getLine(), $tape_left.getStartIndex(), $tape_left.getText().length());
       $value = new MoveLeftInstruction(sc);
    }
-   | tr=TAPE_RIGHT
+   | tape_right=TAPE_RIGHT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
+      ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file, $tape_right.getLine(), $tape_right.getStartIndex(), $tape_right.getText().length());
       $value = new MoveRightInstruction(sc);
    }
-   | i=INPUT
+   | input=INPUT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
+      ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file, $input.getLine(), $input.getStartIndex(), $input.getText().length());
       $value = new ReadInputInstruction(sc);
    }
-   | o=OUTPUT
+   | output=OUTPUT
    {
-      SourceCorrespondence sc = new SourceCorrespondence(file, _ctx.getStart().getLine(), _ctx.getStart().getStartIndex(), _ctx.getStart().getText().length());
+      ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file, $output.getLine(), $output.getStartIndex(), $output.getText().length());
       $value = new WriteOutputInstruction(sc);
    }
    ;
          
-loop returns [ArrayList<Instruction> list]
-   : '[' instructions=instruction_list ']'
+loop returns [LoopInstruction value]
+   : lbrace='[' instructions=instruction_list rbrace=']'
    {
-      $list = $instructions.list;
+   	  long length = $rbrace.getStartIndex() - $lbrace.getStartIndex();
+   	  ParserSourceCorrespondence sc = new ParserSourceCorrespondence(file, $lbrace.getLine(), $lbrace.getStartIndex(), length);
+      $value = new LoopInstruction(sc, $instructions.list);
    }
    ;
 

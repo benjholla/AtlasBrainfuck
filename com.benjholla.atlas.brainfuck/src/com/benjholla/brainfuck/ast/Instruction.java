@@ -2,8 +2,8 @@ package com.benjholla.brainfuck.ast;
 
 import org.eclipse.core.runtime.SubMonitor;
 
-import com.benjholla.atlas.brainfuck.common.SourceCorrespondence;
 import com.benjholla.atlas.brainfuck.frontend.XCSG;
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
 import com.ensoftcorp.atlas.core.db.graph.Edge;
 import com.ensoftcorp.atlas.core.db.graph.EditableGraph;
 import com.ensoftcorp.atlas.core.db.graph.Node;
@@ -32,7 +32,7 @@ public abstract class Instruction extends ASTNode {
 	
 	public abstract Type getType();
 	
-	public Instruction(SourceCorrespondence sc) {
+	public Instruction(ParserSourceCorrespondence sc) {
 		super(sc);
 	}
 	

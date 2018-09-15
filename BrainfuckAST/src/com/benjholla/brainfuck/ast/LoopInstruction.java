@@ -2,11 +2,13 @@ package com.benjholla.brainfuck.ast;
 
 import java.util.List;
 
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
+
 public class LoopInstruction extends Instruction {
 
 	private List<Instruction> instructions;
 
-	public LoopInstruction(SourceCorrespondence sc, List<Instruction> instructions) {
+	public LoopInstruction(ParserSourceCorrespondence sc, List<Instruction> instructions) {
 		super(sc);
 		this.instructions = instructions;
 	}

@@ -1,8 +1,10 @@
 package com.benjholla.brainfuck.ast;
 
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
+
 public class MoveRightInstruction extends Instruction {
 
-	public MoveRightInstruction(SourceCorrespondence sc) {
+	public MoveRightInstruction(ParserSourceCorrespondence sc) {
 		super(sc);
 	}
 

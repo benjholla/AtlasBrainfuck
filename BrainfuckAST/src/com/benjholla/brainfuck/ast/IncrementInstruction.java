@@ -1,8 +1,10 @@
 package com.benjholla.brainfuck.ast;
 
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
+
 public class IncrementInstruction extends Instruction {
 
-	public IncrementInstruction(SourceCorrespondence sc) {
+	public IncrementInstruction(ParserSourceCorrespondence sc) {
 		super(sc);
 	}
 

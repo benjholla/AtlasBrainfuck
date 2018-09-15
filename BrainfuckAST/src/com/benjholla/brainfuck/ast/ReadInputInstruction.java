@@ -1,8 +1,10 @@
 package com.benjholla.brainfuck.ast;
 
+import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
+
 public class ReadInputInstruction extends Instruction {
 
-	public ReadInputInstruction(SourceCorrespondence sc) {
+	public ReadInputInstruction(ParserSourceCorrespondence sc) {
 		super(sc);
 	}
 
