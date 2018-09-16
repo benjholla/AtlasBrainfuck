@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+  
+   <!-- startup to register the XCSG tag hierarchy extensions -->
+   <extension point="org.eclipse.ui.startup">
+     <startup class="com.benjholla.brainfuck.atlas.common.XCSG" />
+   </extension>
+  
+   <!-- create an initializer extension to initialize toolbox commons preferences -->
+   <extension point="org.eclipse.equinox.preferences.preferences">
+	   <initializer class="com.benjholla.brainfuck.atlas.preferences.BrainfuckPreferences" />
+   </extension>
+
+   <!-- create a preferences menu item -->
+   <extension point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.benjholla.brainfuck.atlas.ui.BrainfuckPreferencesPage"
+            id="com.benjholla.brainfuck.atlas.ui.preferences"
+            name="Brainfuck Indexer"
+            category="com.benjholla.brainfuck.atlas.ui">
+      </page>
+   </extension>
+  
+   <!-- create an Atlas indexer for Brainfuck -->
+   <extension
+        id="BrainfuckLanguageIndexingProviderFactory"
+        name="BrainfuckLanguageIndexingProviderFactory"
+        point="com.ensoftcorp.atlas.core.LanguageIndexingProviderFactories">
+     <ProviderFactory
+           class="com.benjholla.brainfuck.atlas.indexer.BrainfuckIndexer">
+     </ProviderFactory>
+   </extension>
+  
+</plugin>

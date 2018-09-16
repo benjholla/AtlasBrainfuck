@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Atlas for Brainfuck
+Bundle-SymbolicName: com.benjholla.brainfuck.atlas;singleton:=true
+Bundle-Version: 3.3.1.qualifier
+Bundle-Activator: com.benjholla.brainfuck.atlas.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.core.filesystem,
+ org.eclipse.ui.ide,
+ com.ensoftcorp.atlas.core;bundle-version="3.3.6",
+ com.ensoftcorp.atlas.ui;bundle-version="3.3.6",
+ com.ensoftcorp.atlas.ui.shell;bundle-version="3.3.6",
+ com.benjholla.brainfuck.eclipse;bundle-version="3.3.6",
+ org.antlr.v4;bundle-version="4.7.1"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Ben Holland
+Export-Package: com.benjholla.brainfuck.atlas.common,
+ com.benjholla.brainfuck.atlas.interpreter
+Automatic-Module-Name: com.benjholla.brainfuck.atlas
