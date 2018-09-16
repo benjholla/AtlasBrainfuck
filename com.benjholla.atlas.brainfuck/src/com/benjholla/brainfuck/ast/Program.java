@@ -39,11 +39,11 @@ public class Program extends ASTNode {
 	
 	@Override
 	public Node index(EditableGraph graph, Node containerNode, SubMonitor monitor) {
-		int instructionCount = 0;
+		int blockSize = 0;
 		Node previousInstructionNode = null;
 		for(int i=0; i<instructions.size(); i++) {
 			Instruction instruction = instructions.get(i);
-			instructionCount++;
+			blockSize++;
 			
 			boolean coalesce = false;
 			if(previousInstructionNode != null && !(previousInstructionNode.taggedWith(XCSG.ControlFlowCondition)) && !(instruction instanceof LoopInstruction)) {
@@ -51,7 +51,7 @@ public class Program extends ASTNode {
 					if(BrainfuckPreferences.isLimitMaxBasicBlockInstructionsEnabled()) {
 						if(BrainfuckPreferences.isIncludeWhitespaceBasicBlockDelimitersEnabled()) {
 							// limited length, whitespace considered
-							if(instructionCount % BrainfuckPreferences.getMaxBasicBlockInstructions() != 0) {
+							if(blockSize <= BrainfuckPreferences.getMaxBasicBlockInstructions()) {
 								SourceCorrespondence previousSC = (SourceCorrespondence) previousInstructionNode.getAttr(XCSG.sourceCorrespondence);
 								int prevOffsetEnd = previousSC.offset + previousSC.length;
 								int nextOffsetEnd = instruction.getParserSourceCorrespondence().getOffset() + instruction.getParserSourceCorrespondence().getLength();
@@ -61,7 +61,7 @@ public class Program extends ASTNode {
 							}
 						} else {
 							// limited length, whitespace ignored
-							if(instructionCount % BrainfuckPreferences.getMaxBasicBlockInstructions() != 0) {
+							if(blockSize <= BrainfuckPreferences.getMaxBasicBlockInstructions()) {
 								coalesce = true;
 							}
 						}
@@ -103,6 +103,8 @@ public class Program extends ASTNode {
 																   instruction.getParserSourceCorrespondence().getEndLine());
 				previousInstructionNode.putAttr(XCSG.sourceCorrespondence, sc);
 			} else {
+				blockSize = 1;
+				
 				// create the instruction node
 				Node instructionNode = instruction.index(graph, containerNode, monitor);
 				
