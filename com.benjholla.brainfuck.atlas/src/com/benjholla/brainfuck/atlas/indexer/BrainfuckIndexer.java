@@ -71,6 +71,10 @@ public class BrainfuckIndexer implements com.ensoftcorp.atlas.core.indexing.prov
 
 	@Override
 	public boolean canIndexProject(IProject project) throws CoreException {
+		return isIndexableBrainfuckProject(project);
+	}
+	
+	public static boolean isIndexableBrainfuckProject(IProject project) throws CoreException {
 		return project.isAccessible() && project.isNatureEnabled(BrainfuckNature.NATURE_ID);
 	}
 

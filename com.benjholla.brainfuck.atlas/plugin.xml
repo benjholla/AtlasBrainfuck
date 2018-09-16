@@ -31,5 +31,10 @@
            class="com.benjholla.brainfuck.atlas.indexer.BrainfuckIndexer">
      </ProviderFactory>
    </extension>
+   
+   <!-- create Atlas selection converters -->
+   <extension point="com.ensoftcorp.atlas.ui.selectionConverters">
+      <converter class="com.benjholla.brainfuck.atlas.selections.BrainfuckSelectionConverter" />
+   </extension>
   
 </plugin>
