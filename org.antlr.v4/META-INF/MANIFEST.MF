@@ -2,11 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ANTLR V4
 Bundle-SymbolicName: org.antlr.v4;singleton:=true
-Bundle-Version: 4.7.1
-Bundle-Vendor: antlr.org
-Automatic-Module-Name: org.antlr.v4
+Bundle-Version: 4.7.1.qualifier
+Bundle-Activator: org.antlr.v4.Activator
+Bundle-Vendor: org.antlr.v4
+Require-Bundle: org.eclipse.ui,
+  org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.antlr.v4.runtime,
+Automatic-Module-Name: org.antlr.v4
+Bundle-ActivationPolicy: lazy
+Export-Package: org.antlr.v4,
+ org.antlr.v4.runtime,
  org.antlr.v4.runtime.atn,
  org.antlr.v4.runtime.dfa,
  org.antlr.v4.runtime.misc,
