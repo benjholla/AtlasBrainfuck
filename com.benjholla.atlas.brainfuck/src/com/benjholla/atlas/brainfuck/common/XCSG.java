@@ -20,6 +20,7 @@ public class XCSG implements IStartup {
 		public static final String ImplictFunction = "XCSG.Brainfuck.ImplictFunction";
 		public static final String LoopFooter = "XCSG.Brainfuck.LoopFooter";
 		public static final String Instruction = "XCSG.Brainfuck.Instruction";
+		public static final String Instructions = "XCSG.Brainfuck.Instructions"; // just used for coalesced basic blocks
 		public static final String IncrementInstruction = "XCSG.Brainfuck.IncrementInstruction";
 		public static final String DecrementInstruction = "XCSG.Brainfuck.DecrementInstruction";
 		public static final String MoveLeftInstruction = "XCSG.Brainfuck.MoveLeftInstruction";
@@ -65,6 +66,7 @@ public class XCSG implements IStartup {
 			isTagHierarchyInitialized = true;
 			com.ensoftcorp.atlas.core.xcsg.XCSG.HIERARCHY.registerTag(XCSG.Brainfuck.ImplictFunction, XCSG.Function);
 			com.ensoftcorp.atlas.core.xcsg.XCSG.HIERARCHY.registerTag(XCSG.Brainfuck.Instruction, XCSG.ControlFlow_Node);
+			com.ensoftcorp.atlas.core.xcsg.XCSG.HIERARCHY.registerTag(XCSG.Brainfuck.Instructions, XCSG.ControlFlow_Node);
 			com.ensoftcorp.atlas.core.xcsg.XCSG.HIERARCHY.registerTag(XCSG.Brainfuck.IncrementInstruction, XCSG.Brainfuck.Instruction);
 			com.ensoftcorp.atlas.core.xcsg.XCSG.HIERARCHY.registerTag(XCSG.Brainfuck.DecrementInstruction, XCSG.Brainfuck.Instruction);
 			com.ensoftcorp.atlas.core.xcsg.XCSG.HIERARCHY.registerTag(XCSG.Brainfuck.MoveLeftInstruction, XCSG.Brainfuck.Instruction);

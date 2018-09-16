@@ -13,22 +13,26 @@ import com.ensoftcorp.atlas.core.index.common.SourceCorrespondence;
 public abstract class Instruction extends ASTNode {
 
 	public static enum Type {
-		INCREMENT("+"), 
-		DECREMENT("-"),
-		MOVE_RIGHT(">"),
-		MOVE_LEFT("<"),
-		READ(","),
-		WRITE("."),
-		LOOP("[");
+		INCREMENT('+'), 
+		DECREMENT('-'),
+		MOVE_RIGHT('>'),
+		MOVE_LEFT('<'),
+		READ(','),
+		WRITE('.'),
+		LOOP('[');
 		
-		private String name;
+		private char name;
 		
-		private Type(String name) {
+		private Type(char name) {
 			this.name = name;
 		}
 		
-		public String toString() {
+		public char getName() {
 			return name;
+		}
+		
+		public String toString() {
+			return "" + name;
 		}
 	}
 	
@@ -42,7 +46,6 @@ public abstract class Instruction extends ASTNode {
 	public Node index(EditableGraph graph, Node containerNode, SubMonitor monitor) {
 		// create the instruction node
 		Node instructionNode = graph.createNode();
-		instructionNode.tag(XCSG.ControlFlow_Node);
 		instructionNode.putAttr(XCSG.name, getType().toString());
 		
 		// set the instruction node's source correspondence

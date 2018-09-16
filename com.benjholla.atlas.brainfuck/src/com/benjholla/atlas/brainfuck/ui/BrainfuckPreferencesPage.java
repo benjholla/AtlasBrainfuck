@@ -14,6 +14,7 @@ import com.benjholla.atlas.brainfuck.preferences.BrainfuckPreferences;
 public class BrainfuckPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 	private static final String COALESCING_BASIC_BLOCKS_DESCRIPTION = "Enable coalescing basic blocks";
+	private static final String INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS_DESCRIPTION = "Include whitespace (non-instruction characters) as basic block delimiteres";
 	private static final String LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS_DESCRIPTION = "Limit max instructions per basic block";
 	private static final String MAX_BASIC_BLOCK_INSTRUCTIONS_DESCRIPTION = "Max instructions per basic block";
 	
@@ -44,6 +45,7 @@ public class BrainfuckPreferencesPage extends FieldEditorPreferencePage implemen
 	@Override
 	protected void createFieldEditors() {
 		addField(new BooleanFieldEditor(BrainfuckPreferences.COALESCING_BASIC_BLOCKS, "&" + COALESCING_BASIC_BLOCKS_DESCRIPTION, getFieldEditorParent()));
+		addField(new BooleanFieldEditor(BrainfuckPreferences.INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS, "&" + INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS_DESCRIPTION, getFieldEditorParent()));
 		addField(new BooleanFieldEditor(BrainfuckPreferences.LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS, "&" + LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS_DESCRIPTION, getFieldEditorParent()));
 		addField(new IntegerFieldEditor(BrainfuckPreferences.MAX_BASIC_BLOCK_INSTRUCTIONS, "&" + MAX_BASIC_BLOCK_INSTRUCTIONS_DESCRIPTION, getFieldEditorParent()));
 	}

@@ -67,14 +67,6 @@ public class BrainfuckIndexer implements com.ensoftcorp.atlas.core.indexing.prov
 			// index the contents of the namespace
 			program.index(graph, implicitFunctionNode, monitor);
 		}
-		
-//		// TODO: optionally coalesce basic blocks for readability
-//		if(BrainfuckPreferences.isCoalescingBasicBlocksEnabled()) {
-//			for(Node function : new AtlasHashSet<Node>(Common.toQ(graph).nodes(XCSG.Brainfuck.ImplictFunction).eval().nodes())) {
-//				BasicBlockTransform basicBlock = new BasicBlockTransform();
-//				basicBlock.transform(CommonQueries.cfg(Common.toQ(function)));
-//			}
-//		}
 	}
 
 	@Override

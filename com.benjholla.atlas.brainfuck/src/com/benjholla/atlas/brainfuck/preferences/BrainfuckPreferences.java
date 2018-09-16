@@ -38,6 +38,33 @@ public class BrainfuckPreferences extends AbstractPreferenceInitializer {
 	}
 	
 	/**
+	 * Enable/disable whitespace basic block delimiters
+	 */
+	public static final String INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS = "INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS";
+	public static final Boolean INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS_DEFAULT = true;
+	private static boolean includeWhitespaceBasicBlocksDelimitersValue = INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS_DEFAULT;
+	
+	/**
+	 * Configures including whitespace basic block delimiters
+	 */
+	public static void enableIncludeWhitespaceBasicBlockDelimiters(boolean enabled){
+		IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
+		preferences.setValue(INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS, enabled);
+		loadPreferences();
+	}
+	
+	/**
+	 * Returns true if whitespace basic block delimiters are enabled
+	 * @return
+	 */
+	public static boolean isIncludeWhitespaceBasicBlockDelimitersEnabled(){
+		if(!initialized){
+			loadPreferences();
+		}
+		return includeWhitespaceBasicBlocksDelimitersValue;
+	}
+	
+	/**
 	 * Enable/disable coalescing of basic blocks
 	 */
 	public static final String LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS = "LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS";
@@ -68,7 +95,7 @@ public class BrainfuckPreferences extends AbstractPreferenceInitializer {
 	 * Merge renaming prefix
 	 */
 	public static final String MAX_BASIC_BLOCK_INSTRUCTIONS = "MAX_BASIC_BLOCK_INSTRUCTIONS";
-	public static final int MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT = 10;
+	public static final int MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT = 20;
 	private static int maxBasicBlocksValue = MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT;
 	
 	/**
@@ -95,6 +122,7 @@ public class BrainfuckPreferences extends AbstractPreferenceInitializer {
 	public void initializeDefaultPreferences() {
 		IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
 		preferences.setDefault(COALESCING_BASIC_BLOCKS, COALESCING_BASIC_BLOCKS_DEFAULT);
+		preferences.setDefault(INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS, INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS_DEFAULT);
 		preferences.setDefault(LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS, LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT);
 		preferences.setDefault(MAX_BASIC_BLOCK_INSTRUCTIONS, MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT);
 	}
@@ -105,6 +133,7 @@ public class BrainfuckPreferences extends AbstractPreferenceInitializer {
 	public static void restoreDefaults(){
 		IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
 		preferences.setValue(COALESCING_BASIC_BLOCKS, COALESCING_BASIC_BLOCKS_DEFAULT);
+		preferences.setValue(INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS, INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS_DEFAULT);
 		preferences.setValue(LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS, LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT);
 		preferences.setValue(MAX_BASIC_BLOCK_INSTRUCTIONS, MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT);
 		loadPreferences();
@@ -117,6 +146,7 @@ public class BrainfuckPreferences extends AbstractPreferenceInitializer {
 		try {
 			IPreferenceStore preferences = Activator.getDefault().getPreferenceStore();
 			coalescingBasicBlocksValue = preferences.getBoolean(COALESCING_BASIC_BLOCKS);
+			includeWhitespaceBasicBlocksDelimitersValue = preferences.getBoolean(INCLUDE_WHITESPACE_BASIC_BLOCK_DELIMITERS);
 			limitMaxBasicBlocksValue = preferences.getBoolean(LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS);
 			maxBasicBlocksValue = preferences.getInt(MAX_BASIC_BLOCK_INSTRUCTIONS);
 		} catch (Exception e){

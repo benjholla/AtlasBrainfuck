@@ -11,7 +11,7 @@
    <extension point="org.eclipse.equinox.preferences.preferences">
 	   <initializer class="com.benjholla.atlas.brainfuck.preferences.BrainfuckPreferences" />
    </extension>
-	
+
    <!-- create a preferences menu item -->
    <extension point="org.eclipse.ui.preferencePages">
       <page

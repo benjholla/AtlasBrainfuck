@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import com.benjholla.atlas.brainfuck.common.XCSG;
+import com.benjholla.brainfuck.ast.Instruction;
 import com.ensoftcorp.atlas.core.db.graph.Edge;
 import com.ensoftcorp.atlas.core.db.graph.Node;
 import com.ensoftcorp.atlas.core.db.set.AtlasSet;
@@ -182,37 +183,53 @@ public class BrainfuckGraphInterpreter {
 			Q cfg = Common.toQ(CommonQueries.cfg(Common.toQ(nextInstruction).parent()).eval());
 			Q loopChildEdges = Common.toQ(cfg.retainNodes().induce(Common.universe().edges(XCSG.LoopChild)).retainEdges().eval());
 			do {
-				if(nextInstruction.taggedWith(XCSG.Brainfuck.Instruction)) {
-					if(nextInstruction.taggedWith(XCSG.Brainfuck.IncrementInstruction)) {
-						byte incrementValue = memory.remove(mp);
-						memory.add(mp, ++incrementValue);
-					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.DecrementInstruction)) {
-						byte decrementValue = memory.remove(mp);
-						memory.add(mp, --decrementValue);
-					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.MoveLeftInstruction)) {
-						mp = (mp>0) ? mp-1 : 0;
-					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.MoveRightInstruction)) {
-						mp++;
-						if(mp == memory.size()){
-							// we have reached the end of the tape, grow by one cell
-							memory.add((byte)0x00);
+				if(nextInstruction.taggedWith(XCSG.Brainfuck.Instructions)) {
+					String instructions = nextInstruction.getAttr(XCSG.name).toString();
+					for(int i=0; i<instructions.length(); i++) {
+						Character instruction = instructions.charAt(i);
+						if(instruction.equals(Instruction.Type.INCREMENT.getName())) {
+							increment(memory, mp);
+						} else if(instruction.equals(Instruction.Type.DECREMENT.getName())) {
+							decrement(memory, mp);
+						} else if(instruction.equals(Instruction.Type.MOVE_LEFT.getName())) {
+							mp = moveLeft(mp);
+						} else if(instruction.equals(Instruction.Type.MOVE_RIGHT.getName())) {
+							mp = moveRight(memory, mp);
+						} else if(instruction.equals(Instruction.Type.READ.getName())) {
+							readInput(input, memory, mp);
+						} else if(instruction.equals(Instruction.Type.WRITE.getName())) {
+							writeOutput(output, memory, mp);
+						} else {
+							throw new IllegalArgumentException("Error: Control flow instruction [" + nextInstruction.address().toAddressString() + "] contained an unknown instruction type.");
 						}
-					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.ReadInputInstruction)) {
-						memory.remove(mp);
-						byte[] bytes = new byte[1];
-						if(input != null) {
-							input.read(bytes);
-						}
-						memory.add(mp, bytes[0]);
-					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.WriteOutputInstruction)) {
-						output.write(new byte[] {memory.get(mp)});
-					} else {
-						throw new IllegalArgumentException("Error: Control flow operator [" + nextInstruction.address().toAddressString() + "] was an unknown operator type.");
 					}
 					
 					AtlasSet<Node> successors = cfg.successors(Common.toQ(nextInstruction)).eval().nodes();
 					if(successors.size() > 1) {
-						throw new IllegalArgumentException("Error: Control flow operator node [" + nextInstruction.address().toAddressString() + "] unexpectedly had multiple successors.");
+						throw new IllegalArgumentException("Error: Control flow instruction node [" + nextInstruction.address().toAddressString() + "] unexpectedly had multiple successors.");
+					} else {
+						nextInstruction = successors.one();
+					}
+				} else if(nextInstruction.taggedWith(XCSG.Brainfuck.Instruction)) {
+					if(nextInstruction.taggedWith(XCSG.Brainfuck.IncrementInstruction)) {
+						increment(memory, mp);
+					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.DecrementInstruction)) {
+						decrement(memory, mp);
+					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.MoveLeftInstruction)) {
+						mp = moveLeft(mp);
+					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.MoveRightInstruction)) {
+						mp = moveRight(memory, mp);
+					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.ReadInputInstruction)) {
+						readInput(input, memory, mp);
+					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.WriteOutputInstruction)) {
+						writeOutput(output, memory, mp);
+					} else {
+						throw new IllegalArgumentException("Error: Control flow instruction [" + nextInstruction.address().toAddressString() + "] was an unknown instruction type.");
+					}
+					
+					AtlasSet<Node> successors = cfg.successors(Common.toQ(nextInstruction)).eval().nodes();
+					if(successors.size() > 1) {
+						throw new IllegalArgumentException("Error: Control flow instruction node [" + nextInstruction.address().toAddressString() + "] unexpectedly had multiple successors.");
 					} else {
 						nextInstruction = successors.one();
 					}
@@ -241,6 +258,43 @@ public class BrainfuckGraphInterpreter {
 				}
 			} while(nextInstruction != null);
 		}
+	}
+
+	private static void writeOutput(OutputStream output, ArrayList<Byte> memory, int mp) throws IOException {
+		output.write(new byte[] {memory.get(mp)});
+	}
+
+	private static void readInput(InputStream input, ArrayList<Byte> memory, int mp) throws IOException {
+		memory.remove(mp);
+		byte[] bytes = new byte[1];
+		if(input != null) {
+			input.read(bytes);
+		}
+		memory.add(mp, bytes[0]);
+	}
+
+	private static int moveRight(ArrayList<Byte> memory, int mp) {
+		mp++;
+		if(mp == memory.size()){
+			// we have reached the end of the tape, grow by one cell
+			memory.add((byte)0x00);
+		}
+		return mp;
+	}
+
+	private static int moveLeft(int mp) {
+		mp = (mp>0) ? mp-1 : 0;
+		return mp;
+	}
+
+	private static void decrement(ArrayList<Byte> memory, int mp) {
+		byte decrementValue = memory.remove(mp);
+		memory.add(mp, --decrementValue);
+	}
+
+	private static void increment(ArrayList<Byte> memory, int mp) {
+		byte incrementValue = memory.remove(mp);
+		memory.add(mp, ++incrementValue);
 	}
 	
 }
