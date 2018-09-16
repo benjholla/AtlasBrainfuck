@@ -41,7 +41,7 @@ public class BrainfuckPreferences extends AbstractPreferenceInitializer {
 	 * Enable/disable coalescing of basic blocks
 	 */
 	public static final String LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS = "LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS";
-	public static final Boolean LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT = false;
+	public static final Boolean LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT = true;
 	private static boolean limitMaxBasicBlocksValue = LIMIT_MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT;
 	
 	/**
@@ -68,7 +68,7 @@ public class BrainfuckPreferences extends AbstractPreferenceInitializer {
 	 * Merge renaming prefix
 	 */
 	public static final String MAX_BASIC_BLOCK_INSTRUCTIONS = "MAX_BASIC_BLOCK_INSTRUCTIONS";
-	public static final int MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT = 1;
+	public static final int MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT = 10;
 	private static int maxBasicBlocksValue = MAX_BASIC_BLOCK_INSTRUCTIONS_DEFAULT;
 	
 	/**

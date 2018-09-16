@@ -151,7 +151,7 @@ public class BrainfuckGraphInterpreter {
 			}
 		}
 		
-		if(program.taggedWith(XCSG.ImplictFunction)) {
+		if(program.taggedWith(XCSG.Brainfuck.ImplictFunction)) {
 			AtlasSet<Node> controlFlowRoots = Common.toQ(program).eval().nodes();
 			if(controlFlowRoots.isEmpty()) {
 				throw new IllegalArgumentException("Implict function (" + program.getAttr(XCSG.name) + ") is missing a control flow roots.");
@@ -182,29 +182,29 @@ public class BrainfuckGraphInterpreter {
 			Q cfg = Common.toQ(CommonQueries.cfg(Common.toQ(nextInstruction).parent()).eval());
 			Q loopChildEdges = Common.toQ(cfg.retainNodes().induce(Common.universe().edges(XCSG.LoopChild)).retainEdges().eval());
 			do {
-				if(nextInstruction.taggedWith(XCSG.Operator)) {
-					if(nextInstruction.taggedWith(XCSG.Brainfuck.IncrementOperator)) {
+				if(nextInstruction.taggedWith(XCSG.Brainfuck.Instruction)) {
+					if(nextInstruction.taggedWith(XCSG.Brainfuck.IncrementInstruction)) {
 						byte incrementValue = memory.remove(mp);
 						memory.add(mp, ++incrementValue);
-					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.DecrementOperator)) {
+					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.DecrementInstruction)) {
 						byte decrementValue = memory.remove(mp);
 						memory.add(mp, --decrementValue);
-					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.MoveLeftOperator)) {
+					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.MoveLeftInstruction)) {
 						mp = (mp>0) ? mp-1 : 0;
-					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.MoveRightOperator)) {
+					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.MoveRightInstruction)) {
 						mp++;
 						if(mp == memory.size()){
 							// we have reached the end of the tape, grow by one cell
 							memory.add((byte)0x00);
 						}
-					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.ReadInputOperator)) {
+					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.ReadInputInstruction)) {
 						memory.remove(mp);
 						byte[] bytes = new byte[1];
 						if(input != null) {
 							input.read(bytes);
 						}
 						memory.add(mp, bytes[0]);
-					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.WriteOutputOperator)) {
+					} else if(nextInstruction.taggedWith(XCSG.Brainfuck.WriteOutputInstruction)) {
 						output.write(new byte[] {memory.get(mp)});
 					} else {
 						throw new IllegalArgumentException("Error: Control flow operator [" + nextInstruction.address().toAddressString() + "] was an unknown operator type.");

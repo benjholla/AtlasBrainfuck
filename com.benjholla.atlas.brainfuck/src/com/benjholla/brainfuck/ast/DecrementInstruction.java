@@ -26,7 +26,7 @@ public class DecrementInstruction extends Instruction {
 	public Node index(EditableGraph graph, Node containerNode, SubMonitor monitor) {
 		// create the instruction node
 		Node instructionNode = super.index(graph, containerNode, monitor);
-		instructionNode.tag(XCSG.Brainfuck.DecrementOperator);
+		instructionNode.tag(XCSG.Brainfuck.DecrementInstruction);
 		return instructionNode;
 	}
 	

@@ -47,10 +47,9 @@ public class LoopInstruction extends Instruction {
 	public Node index(EditableGraph graph, Node containerNode, SubMonitor monitor) {
 		// create the loop header node
 		Node loopHeader = graph.createNode();
-		loopHeader.tag(XCSG.ControlFlow_Node);
 		loopHeader.putAttr(XCSG.name, getType().toString());
-		loopHeader.tag(XCSG.ControlFlowCondition);
 		loopHeader.tag(XCSG.Loop);
+		loopHeader.tag(XCSG.ControlFlowCondition);
 		
 		// set the loop headers node's source correspondence
 		// selecting a loop header will highlight the entire loop
@@ -106,8 +105,7 @@ public class LoopInstruction extends Instruction {
 		
 		// create the loop footer node
 		Node loopFooter = graph.createNode();
-		loopFooter.tag(XCSG.ControlFlow_Node);
-		loopFooter.tag(XCSG.ControlFlowCondition);
+		loopFooter.tag(XCSG.Brainfuck.LoopFooter);
 		loopFooter.putAttr(XCSG.name, "]");
 		
 		// set the loop headers node's source correspondence
@@ -124,7 +122,6 @@ public class LoopInstruction extends Instruction {
 		
 		// create loop back edge
 		Edge loopBackEdge = graph.createEdge(loopFooter, loopHeader);
-		loopBackEdge.tag(XCSG.ControlFlow_Edge);
 		loopBackEdge.tag(XCSG.ControlFlowBackEdge);
 		loopBackEdge.putAttr(XCSG.conditionValue, true); // any non-zero value
 		

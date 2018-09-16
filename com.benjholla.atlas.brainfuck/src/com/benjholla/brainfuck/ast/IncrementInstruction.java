@@ -26,7 +26,7 @@ public class IncrementInstruction extends Instruction {
 	public Node index(EditableGraph graph, Node containerNode, SubMonitor monitor) {
 		// create the instruction node
 		Node instructionNode = super.index(graph, containerNode, monitor);
-		instructionNode.tag(XCSG.Brainfuck.IncrementOperator);
+		instructionNode.tag(XCSG.Brainfuck.IncrementInstruction);
 		return instructionNode;
 	}
 	

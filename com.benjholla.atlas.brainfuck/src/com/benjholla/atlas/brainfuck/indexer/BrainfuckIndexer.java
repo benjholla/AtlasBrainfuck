@@ -31,9 +31,6 @@ public class BrainfuckIndexer implements com.ensoftcorp.atlas.core.indexing.prov
 	private static void index(BrainfuckAST ast, EditableGraph graph, Node projectNode, SubMonitor monitor) throws Exception {
 		Log.info("Indexing: " + ast.getBrainfuckProject().getProject().getName());
 		
-		// register the Brainfuck XCSG schema
-		XCSG.Brainfuck.registerSchema();
-		
 		// index the program
 		for(Program program : ast.getASTForest()) {
 			File sourceFile = program.getParserSourceCorrespondence().getSource();
@@ -56,7 +53,7 @@ public class BrainfuckIndexer implements com.ensoftcorp.atlas.core.indexing.prov
 			// as another container level inside the namespace to allow smart views and common queries to 
 			// operate cleanly out of the box
 			Node implicitFunctionNode = graph.createNode();
-			implicitFunctionNode.tag(XCSG.ImplictFunction);
+			implicitFunctionNode.tag(XCSG.Brainfuck.ImplictFunction);
 			if(sourceFileName.contains(".")) {
 				sourceFileName = sourceFileName.substring(0, sourceFileName.lastIndexOf("."));
 			}
@@ -70,6 +67,14 @@ public class BrainfuckIndexer implements com.ensoftcorp.atlas.core.indexing.prov
 			// index the contents of the namespace
 			program.index(graph, implicitFunctionNode, monitor);
 		}
+		
+//		// TODO: optionally coalesce basic blocks for readability
+//		if(BrainfuckPreferences.isCoalescingBasicBlocksEnabled()) {
+//			for(Node function : new AtlasHashSet<Node>(Common.toQ(graph).nodes(XCSG.Brainfuck.ImplictFunction).eval().nodes())) {
+//				BasicBlockTransform basicBlock = new BasicBlockTransform();
+//				basicBlock.transform(CommonQueries.cfg(Common.toQ(function)));
+//			}
+//		}
 	}
 
 	@Override

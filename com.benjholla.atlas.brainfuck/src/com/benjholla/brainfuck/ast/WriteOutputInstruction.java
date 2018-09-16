@@ -26,7 +26,7 @@ public class WriteOutputInstruction extends Instruction {
 	public Node index(EditableGraph graph, Node containerNode, SubMonitor monitor) {
 		// create the instruction node
 		Node instructionNode = super.index(graph, containerNode, monitor);
-		instructionNode.tag(XCSG.Brainfuck.WriteOutputOperator);
+		instructionNode.tag(XCSG.Brainfuck.WriteOutputInstruction);
 		return instructionNode;
 	}
 	

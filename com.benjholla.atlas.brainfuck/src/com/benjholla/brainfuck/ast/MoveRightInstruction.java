@@ -26,7 +26,7 @@ public class MoveRightInstruction extends Instruction {
 	public Node index(EditableGraph graph, Node containerNode, SubMonitor monitor) {
 		// create the instruction node
 		Node instructionNode = super.index(graph, containerNode, monitor);
-		instructionNode.tag(XCSG.Brainfuck.MoveRightOperator);
+		instructionNode.tag(XCSG.Brainfuck.MoveRightInstruction);
 		return instructionNode;
 	}
 	
