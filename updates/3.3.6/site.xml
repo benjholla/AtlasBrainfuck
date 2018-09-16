@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/com.benjholla.brainfuck.atlas.feature_3.3.6.201809161640.jar" id="com.benjholla.brainfuck.atlas.feature" version="3.3.6.201809161640">
+      <category name="com.benjholla.brainfuck.category"/>
+   </feature>
+   <feature url="features/com.benjholla.brainfuck.eclipse.feature_3.3.6.201809161640.jar" id="com.benjholla.brainfuck.eclipse.feature" version="3.3.6.201809161640">
+      <category name="com.benjholla.brainfuck.category"/>
+   </feature>
+   <category-def name="com.benjholla.brainfuck.category" label="Atlas for Brainfuck">
+      <description>
+         Atlas for Brainfuck adds Atlas code mapping support and graph based interpreter support for Brainfuck programs.
+      </description>
+   </category-def>
+</site>
