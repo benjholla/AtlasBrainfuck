@@ -13,10 +13,10 @@
    
    <!-- new project wizard -->
    <extension point="org.eclipse.ui.newWizards">
-      <category name="Brainfuck" id="com.benjholla.brainfuck.eclipse.ui.category" />
-      <!--<wizard category="com.benjholla.brainfuck.eclipse.ui.category" class="com.benjholla.brainfuck.eclipse.ui.NewProjectWizard" icon="icons/Brainfuck.gif" id="com.benjholla.brainfuck.eclipse.ui.NewProjectWizard" name="Brainfuck Project">-->
+      <category name="Brainfuck" id="com.benjholla.brainfuck.eclipse.views.categories" />
+      <!--<wizard category="com.benjholla.brainfuck.eclipse.ui.category" class="com.benjholla.brainfuck.eclipse.ui.NewProjectWizard" icon="icons/brainfuck.gif" id="com.benjholla.brainfuck.eclipse.ui.NewProjectWizard" name="Brainfuck Project">-->
       <!-- extending the org.birenheide.bf project, which does not have a project, but does have a category for creating new brainfuck files -->
-      <wizard category="org.birenheide.bf.Brainfuck" class="com.benjholla.brainfuck.eclipse.ui.NewProjectWizard" icon="icons/Brainfuck.gif" id="com.benjholla.brainfuck.eclipse.ui.NewProjectWizard" name="Brainfuck Project">
+      <wizard category="org.birenheide.bf.Brainfuck" class="com.benjholla.brainfuck.eclipse.ui.NewProjectWizard" icon="icons/brainfuck.gif" id="com.benjholla.brainfuck.eclipse.ui.NewProjectWizard" name="Brainfuck Project">
          <description>Creates a new Brainfuck project in the workspace.</description>
       </wizard>
    </extension>
@@ -55,7 +55,7 @@
       <launchConfigurationType id="com.benjholla.brainfuck.eclipse.launchConfigurationType" name="Brainfuck Application" delegate="com.benjholla.brainfuck.eclipse.launcher.BrainfuckLaunchDelegate" modes="run, debug" />
    </extension>
    <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
-      <launchConfigurationTypeImage icon="icons/Brainfuck.gif" configTypeID="com.benjholla.brainfuck.eclipse.launchConfigurationType" id="com.benjholla.brainfuck.eclipse.launchConfigurationTypeImage" />
+      <launchConfigurationTypeImage icon="icons/brainfuck.gif" configTypeID="com.benjholla.brainfuck.eclipse.launchConfigurationType" id="com.benjholla.brainfuck.eclipse.launchConfigurationTypeImage" />
    </extension>
    <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup type="com.benjholla.brainfuck.eclipse.launchConfigurationType" class="com.benjholla.brainfuck.eclipse.launcher.BrainfuckTabGroup" id="com.benjholla.brainfuck.eclipse.launchConfigurationTabGroup" />

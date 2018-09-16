@@ -39,7 +39,7 @@ public class WizardErrorDialog extends UIJob {
 		try {
 			icon = new Image(PlatformUI.getWorkbench().getDisplay(), FileLocator.find(bundle, iconPath, null).openStream());
 		} catch (IOException e) {
-			Log.error("Brainfuck.gif icon is missing.", e);
+			Log.error("brainfuck.gif icon is missing.", e);
 		};
 		MessageDialog dialog = new MessageDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), 
 												"Could Not Create Brainfuck Project", 
