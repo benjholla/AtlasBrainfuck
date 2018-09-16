@@ -18,6 +18,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Ben Holland
 Export-Package: com.benjholla.atlas.brainfuck.common,
- com.benjholla.atlas.brainfuck.indexer,
  com.benjholla.atlas.brainfuck.interpreter
 Automatic-Module-Name: com.benjholla.atlas.brainfuck

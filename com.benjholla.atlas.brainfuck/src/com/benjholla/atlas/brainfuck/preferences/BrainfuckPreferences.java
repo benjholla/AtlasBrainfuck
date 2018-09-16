@@ -14,7 +14,7 @@ public class BrainfuckPreferences extends AbstractPreferenceInitializer {
 	 * Enable/disable coalescing of basic blocks
 	 */
 	public static final String COALESCING_BASIC_BLOCKS = "COALESCE_BASIC_BLOCKS";
-	public static final Boolean COALESCING_BASIC_BLOCKS_DEFAULT = false;
+	public static final Boolean COALESCING_BASIC_BLOCKS_DEFAULT = true;
 	private static boolean coalescingBasicBlocksValue = COALESCING_BASIC_BLOCKS_DEFAULT;
 	
 	/**
