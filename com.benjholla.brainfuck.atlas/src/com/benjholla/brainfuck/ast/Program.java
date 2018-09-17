@@ -43,6 +43,7 @@ public class Program extends ASTNode {
 		Node previousInstructionNode = null;
 		for(int i=0; i<instructions.size(); i++) {
 			Instruction instruction = instructions.get(i);
+			Node instructionNode;
 			blockSize++;
 			
 			boolean coalesce = false;
@@ -102,22 +103,16 @@ public class Program extends ASTNode {
 																   previousInstructionSC.startLine, 
 																   instruction.getParserSourceCorrespondence().getEndLine());
 				previousInstructionNode.putAttr(XCSG.sourceCorrespondence, sc);
+				instructionNode = previousInstructionNode;
 			} else {
 				blockSize = 1;
 				
 				// create the instruction node
-				Node instructionNode = instruction.index(graph, containerNode, monitor);
+				instructionNode = instruction.index(graph, containerNode, monitor);
 				
 				// make the container node contain the instruction
 				Edge containsEdge = graph.createEdge(containerNode, instructionNode);
 				containsEdge.tag(XCSG.Contains);
-				
-				// tag the root/exit nodes appropriately
-				if(i==0) {
-					instructionNode.tag(XCSG.ControlFlowRoot);
-				} else if(i==(instructions.size()-1)) {
-					instructionNode.tag(XCSG.ControlFlowExit);
-				}
 				
 				// create the control flow edge relationship if this isn't the first instruction
 				if(previousInstructionNode != null) {
@@ -143,6 +138,13 @@ public class Program extends ASTNode {
 				
 				// update the previous instruction
 				previousInstructionNode = instructionNode;
+			}
+			
+			// tag the root/exit nodes appropriately
+			if(i==0) {
+				instructionNode.tag(XCSG.ControlFlowRoot);
+			} else if(i==(instructions.size()-1)) {
+				instructionNode.tag(XCSG.ControlFlowExit);
 			}
 		}
 		
