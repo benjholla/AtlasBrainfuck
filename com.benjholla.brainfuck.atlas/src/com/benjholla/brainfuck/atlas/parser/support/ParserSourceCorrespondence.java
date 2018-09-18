@@ -1,4 +1,4 @@
-package com.benjholla.brainfuck.parser.support;
+package com.benjholla.brainfuck.atlas.parser.support;
 
 import java.io.File;
 

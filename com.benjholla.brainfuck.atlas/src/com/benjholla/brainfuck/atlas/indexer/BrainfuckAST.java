@@ -9,11 +9,11 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import com.benjholla.brainfuck.ast.Program;
+import com.benjholla.brainfuck.atlas.ast.Program;
 import com.benjholla.brainfuck.atlas.log.Log;
+import com.benjholla.brainfuck.atlas.parser.BrainfuckLexer;
+import com.benjholla.brainfuck.atlas.parser.BrainfuckParser;
 import com.benjholla.brainfuck.eclipse.projects.BrainfuckProject;
-import com.benjholla.brainfuck.parser.BrainfuckLexer;
-import com.benjholla.brainfuck.parser.BrainfuckParser;
 
 public class BrainfuckAST {
 

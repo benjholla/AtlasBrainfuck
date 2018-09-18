@@ -15,11 +15,11 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import com.benjholla.brainfuck.ast.Instruction;
-import com.benjholla.brainfuck.ast.LoopInstruction;
-import com.benjholla.brainfuck.ast.Program;
-import com.benjholla.brainfuck.parser.BrainfuckLexer;
-import com.benjholla.brainfuck.parser.BrainfuckParser;
+import com.benjholla.brainfuck.atlas.ast.Instruction;
+import com.benjholla.brainfuck.atlas.ast.LoopInstruction;
+import com.benjholla.brainfuck.atlas.ast.Program;
+import com.benjholla.brainfuck.atlas.parser.BrainfuckLexer;
+import com.benjholla.brainfuck.atlas.parser.BrainfuckParser;
 
 /**
  * A Brainfuck Interpreter implementation using a parsed Brainfuck AST.

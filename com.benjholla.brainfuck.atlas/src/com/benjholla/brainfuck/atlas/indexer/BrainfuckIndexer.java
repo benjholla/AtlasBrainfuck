@@ -9,12 +9,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 
-import com.benjholla.brainfuck.ast.Program;
+import com.benjholla.brainfuck.atlas.ast.Program;
 import com.benjholla.brainfuck.atlas.common.XCSG;
 import com.benjholla.brainfuck.atlas.log.Log;
+import com.benjholla.brainfuck.atlas.parser.support.ParserSourceCorrespondence;
 import com.benjholla.brainfuck.eclipse.projects.BrainfuckNature;
 import com.benjholla.brainfuck.eclipse.projects.BrainfuckProject;
-import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
 import com.ensoftcorp.atlas.core.db.graph.Edge;
 import com.ensoftcorp.atlas.core.db.graph.EditableGraph;
 import com.ensoftcorp.atlas.core.db.graph.Node;

@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import com.benjholla.brainfuck.ast.Instruction;
+import com.benjholla.brainfuck.atlas.ast.Instruction;
 import com.benjholla.brainfuck.atlas.common.XCSG;
 import com.ensoftcorp.atlas.core.db.graph.Edge;
 import com.ensoftcorp.atlas.core.db.graph.Node;

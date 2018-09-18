@@ -1,6 +1,6 @@
 // Generated from Brainfuck.g4 by ANTLR 4.7.1
 
-package com.benjholla.brainfuck.parser;
+package com.benjholla.brainfuck.atlas.parser;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,16 +24,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import com.benjholla.brainfuck.ast.DecrementInstruction;
-import com.benjholla.brainfuck.ast.IncrementInstruction;
-import com.benjholla.brainfuck.ast.Instruction;
-import com.benjholla.brainfuck.ast.LoopInstruction;
-import com.benjholla.brainfuck.ast.MoveLeftInstruction;
-import com.benjholla.brainfuck.ast.MoveRightInstruction;
-import com.benjholla.brainfuck.ast.Program;
-import com.benjholla.brainfuck.ast.ReadInputInstruction;
-import com.benjholla.brainfuck.ast.WriteOutputInstruction;
-import com.benjholla.brainfuck.parser.support.ParserSourceCorrespondence;
+import com.benjholla.brainfuck.atlas.ast.DecrementInstruction;
+import com.benjholla.brainfuck.atlas.ast.IncrementInstruction;
+import com.benjholla.brainfuck.atlas.ast.Instruction;
+import com.benjholla.brainfuck.atlas.ast.LoopInstruction;
+import com.benjholla.brainfuck.atlas.ast.MoveLeftInstruction;
+import com.benjholla.brainfuck.atlas.ast.MoveRightInstruction;
+import com.benjholla.brainfuck.atlas.ast.Program;
+import com.benjholla.brainfuck.atlas.ast.ReadInputInstruction;
+import com.benjholla.brainfuck.atlas.ast.WriteOutputInstruction;
+import com.benjholla.brainfuck.atlas.parser.support.ParserSourceCorrespondence;
 
 @SuppressWarnings({ "all", "warnings", "unchecked", "unused", "cast" })
 public class BrainfuckParser extends Parser {
