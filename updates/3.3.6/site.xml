@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.benjholla.brainfuck.atlas.feature_3.3.6.201809162027.jar" id="com.benjholla.brainfuck.atlas.feature" version="3.3.6.201809162027">
+   <feature url="features/com.benjholla.brainfuck.atlas.feature_3.3.6.201809172107.jar" id="com.benjholla.brainfuck.atlas.feature" version="3.3.6.201809172107">
       <category name="com.benjholla.brainfuck.category"/>
    </feature>
-   <feature url="features/com.benjholla.brainfuck.eclipse.feature_3.3.6.201809162027.jar" id="com.benjholla.brainfuck.eclipse.feature" version="3.3.6.201809162027">
+   <feature url="features/com.benjholla.brainfuck.eclipse.feature_3.3.6.201809172107.jar" id="com.benjholla.brainfuck.eclipse.feature" version="3.3.6.201809172107">
       <category name="com.benjholla.brainfuck.category"/>
    </feature>
    <category-def name="com.benjholla.brainfuck.category" label="Atlas for Brainfuck">
