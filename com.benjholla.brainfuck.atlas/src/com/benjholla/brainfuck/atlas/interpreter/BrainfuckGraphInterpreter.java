@@ -88,7 +88,7 @@ public class BrainfuckGraphInterpreter {
 	 * @throws IOException
 	 */
 	public static String execute(Node program) throws IOException {
-		return execute(program);
+		return execute(program, "");
 	}
 	
 	/**
