@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Atlas for Brainfuck
 Bundle-SymbolicName: com.benjholla.brainfuck.atlas;singleton:=true
-Bundle-Version: 3.6.0.qualifier
+Bundle-Version: 3.9.2.qualifier
 Bundle-Activator: com.benjholla.brainfuck.atlas.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -10,14 +10,14 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.filesystem,
  org.eclipse.ui.ide,
  org.eclipse.jface.text,
- com.ensoftcorp.atlas.core;bundle-version="3.6.0",
- com.ensoftcorp.atlas.ui;bundle-version="3.6.0",
- com.ensoftcorp.atlas.ui.shell;bundle-version="3.6.0",
- com.benjholla.brainfuck.eclipse;bundle-version="3.6.0",
+ com.ensoftcorp.atlas.core;bundle-version="3.9.2",
+ com.ensoftcorp.atlas.ui;bundle-version="3.9.2",
+ com.ensoftcorp.atlas.ui.shell;bundle-version="3.9.2",
+ com.benjholla.brainfuck.eclipse;bundle-version="3.9.2",
  org.antlr.v4;bundle-version="4.7.1",
- com.ensoftcorp.atlas.db;bundle-version="3.6.0",
- com.ensoftcorp.atlas.db.common;bundle-version="3.6.0",
- com.ensoftcorp.atlas.db.implementation;bundle-version="3.6.0"
+ com.ensoftcorp.atlas.db;bundle-version="3.9.2",
+ com.ensoftcorp.atlas.db.common;bundle-version="3.9.2",
+ com.ensoftcorp.atlas.db.implementation;bundle-version="3.9.2"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Ben Holland

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse IDE Support for Brainfuck
 Bundle-SymbolicName: com.benjholla.brainfuck.eclipse;singleton:=true
-Bundle-Version: 3.6.0.qualifier
+Bundle-Version: 3.9.2.qualifier
 Bundle-Activator: com.benjholla.brainfuck.eclipse.Activator
 Bundle-Vendor: Ben Holland
 Require-Bundle: org.eclipse.ui,

@@ -2,7 +2,7 @@
 <feature
       id="com.benjholla.brainfuck.atlas.feature"
       label="Atlas for Brainfuck"
-      version="3.6.0.qualifier"
+      version="3.9.2.qualifier"
       provider-name="Ben Holland">
 
    <description url="https://github.com/benjholla/AtlasBrainfuck">
@@ -27,10 +27,10 @@
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.filesystem"/>
       <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="com.ensoftcorp.atlas.core" version="3.6.0" match="greaterOrEqual"/>
-      <import plugin="com.ensoftcorp.atlas.ui" version="3.6.0" match="greaterOrEqual"/>
-      <import plugin="com.ensoftcorp.atlas.ui.shell" version="3.6.0" match="greaterOrEqual"/>
-      <import plugin="com.benjholla.brainfuck.eclipse" version="3.6.0" match="greaterOrEqual"/>
+      <import plugin="com.ensoftcorp.atlas.core" version="3.9.2" match="greaterOrEqual"/>
+      <import plugin="com.ensoftcorp.atlas.ui" version="3.9.2" match="greaterOrEqual"/>
+      <import plugin="com.ensoftcorp.atlas.ui.shell" version="3.9.2" match="greaterOrEqual"/>
+      <import plugin="com.benjholla.brainfuck.eclipse" version="3.9.2" match="greaterOrEqual"/>
       <import plugin="org.antlr.v4" version="4.7.1" match="greaterOrEqual"/>
    </requires>
 
